@@ -7,6 +7,14 @@ if (!isset($_SESSION['email'])) {
     exit();
 }
 
+$customer_count = 0;
+$customer_count_query = mysqli_query($conn, "SELECT COUNT(*) AS total FROM register");
+
+if ($customer_count_query) {
+    $customer_count_row = mysqli_fetch_assoc($customer_count_query);
+    $customer_count = (int) $customer_count_row['total'];
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -42,12 +50,10 @@ if (!isset($_SESSION['email'])) {
                         class="far fa-user-circle mr-2"
                         style="font-size: 20px;"></i><?php echo htmlspecialchars($_SESSION['email']); ?></a>
                 <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-                    <li><a href="my_orders.php" class="dropdown-item text-dark">My Orders</a></li>
+                    <li><a href="orders.php" class="dropdown-item text-dark">Orders</a></li>
                     <li><a href="payment.php" class="dropdown-item text-dark">Payments</a></li>
-                    <li><a href="my_wishlist.php" class="dropdown-item text-dark">My Wishlist</a></li>
-                    <li><a href="cart.php" class="dropdown-item text-dark">My Cart</a></li>
-                    <li><a href="my_address.php" class="dropdown-item text-dark">My Address</a></li>
-                    <li><a href="profile.php" class="dropdown-item text-dark">My Profile</a></li>
+                    <li><a href="cart.php" class="dropdown-item text-dark">Cart</a></li>
+                    <li><a href="customers.php" class="dropdown-item text-dark">Customers</a></li>
                     <li><a href="logout.php" class="dropdown-item text-danger">Logout</a></li>
                 </ul>
             </li>
@@ -57,9 +63,102 @@ if (!isset($_SESSION['email'])) {
         </div>
     </div>
 
-    <!-- left -->
-    <div class="left-sidebar">
-       
+    <div class="dashboard-layout">
+        <div class="left-sidebar">
+            <div class="left">
+                <h3>Admin Panel</h3>
+                <a href="admin_dashboard.php" style=" color: #2874f0;
+                    text-decoration: none;
+                    background-color: rgb(229, 233, 255);
+                    border: 2px solid #2874f0;
+                    transform: translateX(8px);
+                    box-shadow: 0 10px 18px rgba(40, 116, 240, 0.16);">Dashboard</a>
+                <a href="manage_items.php">Manage Product</a>
+                <a href="../index.php">View Store</a>
+                <a href="orders.php">Orders</a>
+                <a href="customers.php">Customers</a>
+                <a class="log" href="logout.php">Logout</a>
+            </div>
+        </div>
+
+        <div class="dashboard-content">
+            <div class="sh">
+                <h2>Welcome Admin</h2>
+                <p>Select an option from the left sidebar.</p>
+            </div>
+            <div class="history">
+                <div class="first">
+                    <div class="history-icon customer-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="history-text">
+                        <h3>Customers</h3>
+                        <span class="history-count"><?php echo $customer_count; ?></span>
+                        <p>Manage registered users</p>
+                    </div>
+                </div>
+                <div class="second">
+                    <div class="history-icon order-icon">
+                        <i class="fas fa-box-open"></i>
+                    </div>
+                    <div class="history-text">
+                        <h3>Orders</h3>
+                        <span class="history-count">
+                            <?php
+                            $order_count = 0;
+                            $order_count_query = mysqli_query($conn, "SELECT COUNT(*) AS total FROM my_orders");
+                            if ($order_count_query) {
+                                $order_count_row = mysqli_fetch_assoc($order_count_query);
+                                $order_count = (int) $order_count_row['total'];
+                            }
+                            echo $order_count;
+                            ?>
+                        </span>
+                        <p>Track placed orders</p>
+                    </div>
+                </div>
+                <div class="third">
+                    <div class="history-icon cart-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <div class="history-text">
+                        <h3>Carts</h3>
+                        <spna class="history-count">
+                            <?php
+                            $cart_count = 0;
+                            $cart_count_query = mysqli_query($conn, "SELECT COUNT(*) AS total FROM cart");
+                            if ($cart_count_query) {
+                                $cart_count_row = mysqli_fetch_assoc($cart_count_query);
+                                $cart_count = (int) $cart_count_row['total'];
+                            }
+                            echo $cart_count;   
+                            ?>
+                        </spna>
+                        <p>View active shopping carts</p>
+                    </div>
+                </div>
+                <div class="forth">
+                    <div class="history-icon payment-icon">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <div class="history-text">
+                        <h3>Payments</h3>
+                        <span class="history-count">
+                            <?php
+                            $payment_count = 0;
+                            $payment_count_query = mysqli_query($conn, "SELECT SUM(price) AS total FROM my_orders");
+                            if ($payment_count_query) {
+                                $payment_count_row = mysqli_fetch_assoc($payment_count_query);
+                                $payment_count = (int) $payment_count_row['total'];
+                            }
+                            echo $payment_count;   
+                            ?>  
+                            </span>
+                        <p>Monitor recent transactions</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 
@@ -67,7 +166,6 @@ if (!isset($_SESSION['email'])) {
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.2/js/bootstrap.bundle.min.js"></script>
-</body>
 </body>
 
 </html>

@@ -219,11 +219,11 @@ $products = [
     // 125 to 131 home
     125 => ['id' => 125, 'name' => 'Water Bottle', 'price' => 199, 'original_price' => 299, 'image' => 'https://rukminim2.flixcart.com/fk-p-flap/1670/2520/image/304acf4a1f1a7768.jpg?q=80', 'desc' => 'Cold Water Bottle', 'rating' => 4.2, 'reviews' => 321],
     126 => ['id' => 126, 'name' => 'Door Curtain', 'price' => 299, 'original_price' => 399, 'image' => 'https://rukminim2.flixcart.com/fk-p-flap/1670/2520/image/e3e56374158f565b.jpg?q=80', 'desc' => 'Home Appliances', 'rating' => 4.1, 'reviews' => 245],
-    127 => ['id' => 128, 'name' => 'Mosquito Net', 'price' => 319, 'original_price' => 399, 'image' => 'https://rukminim2.flixcart.com/fk-p-flap/1670/2520/image/db2e0848e22e408d.jpg?q=80', 'desc' => 'Mosquito Net', 'rating' => 4.0, 'reviews' => 198],
-    128 => ['id' => 129, 'name' => 'Dryer Stand', 'price' => 999, 'original_price' => 1299, 'image' => 'https://rukminim2.flixcart.com/fk-p-flap/1670/2520/image/c818ac5e2e6f4855.jpg?q=80', 'desc' => 'Clothes Dryer Stand', 'rating' => 4.3, 'reviews' => 432],
-    129 => ['id' => 130, 'name' => 'Door Locks', 'price' => 499, 'original_price' => 699, 'image' => 'https://rukminim2.flixcart.com/fk-p-flap/1670/2520/image/fa72c688263c56c6.jpg?q=80', 'desc' => 'Heavy Door Lock', 'rating' => 4.2, 'reviews' => 276],
-    130 => ['id' => 131, 'name' => 'Power Tool', 'price' => 1299, 'original_price' => 1599, 'image' => 'https://rukminim2.flixcart.com/fk-p-flap/1670/2520/image/15a3847c157990f3.jpg?q=80', 'desc' => 'Power Tool Box', 'rating' => 4.4, 'reviews' => 189],
-    131 => ['id' => 132, 'name' => 'Extension Board', 'price' => 329, 'original_price' => 499, 'image' => 'https://rukminim2.flixcart.com/fk-p-flap/1670/2520/image/15994633b50b2fa5.jpg?q=80', 'desc' => 'Extension Board 500W', 'rating' => 4.1, 'reviews' => 354],
+    127 => ['id' => 127, 'name' => 'Mosquito Net', 'price' => 319, 'original_price' => 399, 'image' => 'https://rukminim2.flixcart.com/fk-p-flap/1670/2520/image/db2e0848e22e408d.jpg?q=80', 'desc' => 'Mosquito Net', 'rating' => 4.0, 'reviews' => 198],
+    128 => ['id' => 128, 'name' => 'Dryer Stand', 'price' => 999, 'original_price' => 1299, 'image' => 'https://rukminim2.flixcart.com/fk-p-flap/1670/2520/image/c818ac5e2e6f4855.jpg?q=80', 'desc' => 'Clothes Dryer Stand', 'rating' => 4.3, 'reviews' => 432],
+    129 => ['id' => 139, 'name' => 'Door Locks', 'price' => 499, 'original_price' => 699, 'image' => 'https://rukminim2.flixcart.com/fk-p-flap/1670/2520/image/fa72c688263c56c6.jpg?q=80', 'desc' => 'Heavy Door Lock', 'rating' => 4.2, 'reviews' => 276],
+    130 => ['id' => 130, 'name' => 'Power Tool', 'price' => 1299, 'original_price' => 1599, 'image' => 'https://rukminim2.flixcart.com/fk-p-flap/1670/2520/image/15a3847c157990f3.jpg?q=80', 'desc' => 'Power Tool Box', 'rating' => 4.4, 'reviews' => 189],
+    131 => ['id' => 131, 'name' => 'Extension Board', 'price' => 329, 'original_price' => 499, 'image' => 'https://rukminim2.flixcart.com/fk-p-flap/1670/2520/image/15994633b50b2fa5.jpg?q=80', 'desc' => 'Extension Board 500W', 'rating' => 4.1, 'reviews' => 354],
 ];
 
 $product_id = isset($_GET['id']) ? (int) $_GET['id'] : 1;
