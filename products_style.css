@@ -1,0 +1,104 @@
+        .product-image-container {
+            border: 1px solid #f0f0f0;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 450px;
+            position: relative;
+        }
+
+        .product-main-image {
+            max-height: 400px;
+            max-width: 100%;
+            object-fit: contain;
+        }
+
+        .product-title {
+            font-size: 18px;
+            color: #212121;
+        }
+
+        .rating-badge {
+            background-color: #388e3c;
+            color: white;
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 3px;
+            display: inline-flex;
+            align-items: center;
+            font-weight: 500;
+        }
+
+        .price-section {
+            margin: 15px 0;
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+        }
+
+        .current-price {
+            font-size: 28px;
+            font-weight: 500;
+            color: #212121;
+        }
+
+        .original-price {
+            font-size: 16px;
+            color: #878787;
+            text-decoration: line-through;
+        }
+
+        .discount-pct {
+            font-size: 16px;
+            color: #388e3c;
+            font-weight: 500;
+        }
+
+        .offers-list li {
+            font-size: 14px;
+            margin-bottom: 8px;
+            list-style-type: none;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .offers-list i {
+            color: #16a34a;
+            margin-top: 3px;
+            margin-right: 10px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn-add-cart {
+            background-color: #ff9f00;
+            color: white;
+            padding: 15px 0;
+            font-size: 16px;
+            font-weight: 500;
+            border: none;
+            border-radius: 2px;
+            flex: 1;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .2);
+        }
+
+        .btn-buy-now {
+            background-color: #fb641b;
+            color: white;
+            padding: 15px 0;
+            font-size: 16px;
+            font-weight: 500;
+            border: none;
+            border-radius: 2px;
+            flex: 1;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .2);
+        }
+
+        ul.offers-list {
+            padding-left: 0;
+        }

@@ -1,0 +1,305 @@
+<?php
+session_start();
+include '../db.php';
+include '../products.php';
+
+$alert_message = '';
+if (isset($_POST['add_to_cart'])) {
+    if (!isset($_SESSION['email'])) {
+        $alert_message = 'Please login to add products to cart!';
+    } else {
+        $product_id = isset($_POST['product_id']) ? (int) $_POST['product_id'] : 0;
+        $user_id = (int) $_SESSION['id'];
+        if ($product_id && !isset($_SESSION['add_to_cart'][$product_id])) {
+            $product_name = mysqli_real_escape_string($conn, $_POST['product_name']);
+            $product_image = isset($_POST['product_image']) ? mysqli_real_escape_string($conn, $_POST['product_image']) : '';
+            mysqli_query($conn, "INSERT INTO cart (user_id, product_id, quantity, product_name, product_image) VALUES ($user_id, $product_id, 1, '$product_name', '$product_image')");
+            $_SESSION['add_to_cart'][$product_id] = [
+                'quantity' => 1,
+                'product_name' => $product_name,
+                'product_image' => $product_image
+            ];
+            $alert_message = 'Product added to your cart!';
+        } else if (isset($_SESSION['add_to_cart'][$product_id])) {
+            $alert_message = 'Product is already in your cart!';
+        }
+    }
+}
+
+$defaultFashionProducts = [];
+foreach ($products as $catalogProduct) {
+    $catalogId = isset($catalogProduct['id']) ? (int) $catalogProduct['id'] : 0;
+    if ($catalogId >= 111 && $catalogId <= 115) {
+        $defaultFashionProducts[] = [
+            'id' => $catalogId,
+            'name' => $catalogProduct['name'],
+            'price' => isset($catalogProduct['price']) ? (float) $catalogProduct['price'] : 0,
+            'desc' => isset($catalogProduct['desc']) ? $catalogProduct['desc'] : '',
+            'img' => isset($catalogProduct['image']) ? $catalogProduct['image'] : ''
+        ];
+    }
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Fashion</title>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/css/adminlte.min.css">
+    <link rel="stylesheet" href="../custom_style.css">
+    <link rel="stylesheet" href="../flipkart_style.css">
+</head>
+
+<body class="hold-transition layout-top-nav">
+    <div class="wrapper">
+        <nav class="main-header navbar navbar-expand-md navbar-light sticky-top">
+            <div class="container" style="max-width: 1800px;">
+                <a href="../index.php" class="navbar-brand brand-logo" style="margin-left: 0px;">
+                    <img src="https://static-assets-web.flixcart.com/batman-returns/batman-returns/p/images/fkheaderlogo_exploreplus-44005d.svg"
+                        alt="Flipkart" height="45" style="margin-right: 10px; padding: 6px 10px; border-radius: 4px;">
+                </a>
+                <div class="search-bar-container d-none d-md-flex position-relative flex-grow-1">
+                    <i class="fas fa-search search-icon"></i>
+                    <input class="search-input" type="search" placeholder="Search for products, brands and more"
+                        aria-label="Search">
+                </div>
+                <button class="navbar-toggler order-1 ml-auto" type="button" data-toggle="collapse"
+                    data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
+                </button>
+                <div class="collapse navbar-collapse order-3" id="navbarCollapse">
+                    <ul class="navbar-nav d-md-none mt-2 w-100">
+                        <li class="w-100">
+                            <div class="position-relative">
+                                <i class="fas fa-search"
+                                    style="position: absolute; left: 10px; top: 12px; color: #aaa;"></i>
+                                <input class="form-control w-100 mb-2" type="search"
+                                    placeholder="Search for products..." style="padding-left: 30px;">
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto align-items-center">
+                    <?php if (!isset($_SESSION['email'])): ?>
+                        <li class="nav-item">
+                            <a href="../login.php" class="nav-link nav-btn-login"><i class="far fa-user-circle mr-2"
+                                    style="font-size: 20px;"></i> Login</a>
+                        </li>
+                    <?php else: ?>
+                        <li class="nav-item dropdown">
+                            <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false" class="nav-link dropdown-toggle"
+                                style="color: #000; font-weight: 500; display:flex; align-items:center;"><i
+                                    class="far fa-user-circle mr-2"
+                                    style="font-size: 20px;"></i><?php echo htmlspecialchars($_SESSION['email']); ?></a>
+                            <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+                                <li><a href="../my_orders.php" class="dropdown-item text-dark">My Orders</a></li>
+                                <li><a href="../payment.php" class="dropdown-item text-dark">Payments</a></li>
+                                <li><a href="../my_wishlist.php" class="dropdown-item text-dark">My Wishlist</a></li>
+                                <li><a href="../cart.php" class="dropdown-item text-dark">My Cart</a></li>
+                                <li><a href="../my_address.php" class="dropdown-item text-dark">My Address</a></li>
+                                <li><a href="../profile.php" class="dropdown-item text-dark">My Profile</a></li>
+                                <li><a href="../logout.php" class="dropdown-item text-danger">Logout</a></li>
+                            </ul>
+
+                        </li>
+                    <?php endif; ?>
+                    <li class="nav-item ml-0 d-none d-md-block">
+                        <a href="../cart.php" class="nav-link" style="color: #000; font-weight: 500;"><i
+                                class="fas fa-shopping-cart mr-2" style="font-size: 20px;"></i> Cart</a>
+                    </li>
+                    <li class="nav-item ml-0 d-lg-block">
+                        <a href="seller.php" class="nav-link" style="color: #000; font-weight: 500;"><i
+                                class="fas fa-store mr-2" style="font-size: 20px;"></i> Become a Seller</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="content-wrapper" style="background-color: transparent;">
+            <div class="hero">
+                <div class="categories-container"
+                    style="justify-content: flex-start; gap: 10px; justify-content: space-around; ">
+                    <div class="category-item">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                        <span style="font-size: 13px; font-weight: 600;"><a href="../index.php" style="color:#000;">For
+                                You</a></span>
+                        <div class="uline" style="display: none;"></div>
+                    </div>
+                    <div class="category-item active">
+                        <i class="fa-solid fa-shirt" style="color: #2874f0;"></i>
+                        <span style="font-size: 13px;"><a href="fashion.php"
+                                style="color:#2874f0 !important; font-weight: bold;">Fashion</a></span>
+                        <div
+                            style="height: 2px; background-color: #2874f0; width: 100%; margin-top: 5px; border-radius: 2px;">
+                        </div>
+                    </div>
+                    <div class="category-item">
+                        <i class="fa-solid fa-mobile-screen-button"></i>
+                        <span style="font-size: 13px;"><a href="mobiles.php" style="color:#000">Mobiles</a></span>
+                    </div>
+                    <div class="category-item">
+                        <i class="fa-solid fa-book"></i>
+                        <span style="font-size: 13px;"><a href="books.php" style="color:#000">Books</a></span>
+                    </div>
+                    <div class="category-item">
+                        <i class="fa-solid fa-laptop"></i>
+                        <span style="font-size: 13px;"><a href="electronic.php"style="color:#000">Electronics</a></span>
+                    </div>
+                    <div class="category-item">
+                        <i class="fa-solid fa-headset"></i>
+                        <span style="font-size: 13px;"><a href="headphone.php"style="color:#000">Head Phone</a></span>
+                    </div>
+                    <div class="category-item">
+                        <i class="fa-regular fa-lightbulb"></i>
+                        <span style="font-size: 13px;"><a href="home.php"style="color:#000">Home</a></span>
+                    </div>
+                    <div class="category-item">
+                        <i class="fa-solid fa-tv"></i>
+                        <span style="font-size: 13px;"><a href="appliances.php" style="color:#000">Appliances</a></span>
+                    </div>
+                    <div class="category-item">
+                        <i class="fa-solid fa-gamepad"></i>
+                        <span style="font-size: 13px;"><a href="toys.php" style="color:#000">Toys, Games</a></span>
+                    </div>
+                    <div class="category-item">
+                        <i class="fa-solid fa-burger"></i>
+                        <span style="font-size: 13px;"><a href="food.php" style="color:#000">Food & Health</a></span>
+                    </div>
+                    <div class="category-item">
+                        <i class="fa-solid fa-helmet-un"></i>
+                        <span style="font-size: 13px;"><a href="auto.php" style="color:#000">Auto Accessories</a></span>
+                    </div>
+                    <div class="category-item">
+                        <i class="fa-solid fa-person-biking"></i>
+                        <span style="font-size: 13px;"><a href="two_wheeler.php" style="color:#000">2 - Wheeler</a></span>
+                    </div>
+                    <div class="category-item">
+                        <i class="fa-solid fa-baseball-bat-ball"></i>
+                        <span style="font-size: 13px;"><a href="sports.php" style="color:#000">Sports</a></span>
+                    </div>
+                    <div class="category-item">
+                        <i class="fa-solid fa-gem"></i>
+                        <span style="font-size: 13px;"><a href="beauty.php" style="color:#000">Beauty</a></span>
+                    </div>
+                    <div class="category-item">
+                        <i class="fa-solid fa-chair"></i>
+                        <span style="font-size: 13px;"><a href="furniture.php" style="color:#000">Furniture</a></span>
+                    </div>
+                </div>
+            </div>
+            <div class="content">
+                <div class="container" style="max-width: 1800px;">
+                    
+
+                    <div id="autoScrollContainer" class="featured-banners row-horizontal">
+                        <div class="featured-banner"><a href="#">
+                                <img src="https://rukminim2.flixcart.com/fk-p-flap/1620/790/image/9f9bfeab466aed2c.png?q=80"
+                                    alt="Banner 1" style="border-radius: 4px; cursor: pointer;">
+                            </a>
+                        </div>
+
+                        <div class="featured-banner"><a href="#">
+                                <img src="https://rukminim2.flixcart.com/fk-p-flap/1620/790/image/50ee1ed153f893a8.jpg?q=80"
+                                    alt="Banner 2" style="border-radius: 4px; cursor: pointer;">
+                            </a>
+                        </div>
+                        <div class="featured-banner"><a href="#">
+                                <img src="https://rukminim2.flixcart.com/fk-p-flap/1620/790/image/b83fb72cfa28beff.png?q=80"
+                                    alt="Banner 3" style="border-radius: 4px; cursor: pointer;">
+                            </a>
+                        </div>
+                        <div class="featured-banner"><a href="#">
+                                <img src="https://rukminim2.flixcart.com/fk-p-flap/1620/790/image/564d3e75999c3b49.png?q=80"
+                                    alt="Banner 4" style="border-radius: 4px; cursor: pointer;">
+                            </a>
+                        </div>
+
+                        <div class="featured-banner"><a href="#">
+                                <img src="https://rukminim1.flixcart.com/fk-p-flap/1620/790/image/a9a2379d64dc7217.jpg?q=80"
+                                    alt="Banner 5" style="border-radius: 4px; cursor: pointer;">
+                            </a>
+                        </div>
+                        <div class="featured-banner"><a href="#">
+                                <img src="https://rukminim2.flixcart.com/fk-p-flap/1620/790/image/50ee1ed153f893a8.jpg?q=80"
+                                    alt="Banner 6" style="border-radius: 4px; cursor: pointer;">
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="product-wrapper" style="border-radius: 20px;">
+                        <div class="section-header">
+                            <h2 style="margin-left: 15px;">Trending in Fashion</h2>
+                            <button class="btn btn-primary rounded-circle" onclick="scrollRight()"
+                                style="width: 32px; height: 32px; padding: 0; margin-right: 15px; display: flex; align-items: center; justify-content: center;"><i
+                                    class="fas fa-chevron-right"></i></button>
+                        </div>
+                        <div id="scrollcontainer"
+                            class="row m-0 p-3 row-horizontal flex-nowrap scroll-container">
+                            <?php foreach ($defaultFashionProducts as $fashionProduct): ?>
+                                <div class="col-5-card p-2">
+                                    <div class="card product-card">
+                                        <img src="<?php echo htmlspecialchars($fashionProduct['img']); ?>"
+                                            class="card-img-top" alt="<?php echo htmlspecialchars($fashionProduct['name']); ?>">
+                                        <div class="card-body">
+                                            <div class="card-head"><a href="../products.php?id=<?php echo (int) $fashionProduct['id']; ?>"
+                                                    style="text-decoration: none; color: #000;"><?php echo htmlspecialchars($fashionProduct['name']); ?></a>
+                                            </div>
+                                            <div class="card-text">From <?php echo htmlspecialchars('₹' . number_format((float) $fashionProduct['price'], 0)); ?></div>
+                                            <div class="text-primary text-muted" style="font-size: 13px;"><?php echo htmlspecialchars($fashionProduct['desc']); ?></div>
+                                            <form method="POST" class="text-center mt-2 d-inline-block">
+                                                <input type="hidden" name="product_id" value="<?php echo (int) $fashionProduct['id']; ?>">
+                                                <input type="hidden" name="product_name" value="<?php echo htmlspecialchars($fashionProduct['name']); ?>">
+                                                <input type="hidden" name="product_image" value="<?php echo htmlspecialchars($fashionProduct['img']); ?>">
+                                                <button type="submit" name="add_to_cart" class="btn btn-primary btn-sm">
+                                                    <i class="fa-solid fa-cart-arrow-down mr-1"></i> Add to cart
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="main-footer">
+        <div class="">
+            <div style=" display: flex;">
+                <div style="margin-left: 70px;">
+                    <strong>Copyright &copy; 2026 <a href="#">Flipkart Replica</a>.</strong> All rights reserved.
+                </div>
+                <div style="margin-left: 1000px;">
+                    Premium E-Commerce Experience
+                </div>
+            </div>
+        </div>
+    </footer>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/js/adminlte.min.js"></script>
+    <?php if (!empty($alert_message)): ?>
+        <script>
+            alert("<?php echo addslashes($alert_message); ?>");
+        </script>
+    <?php endif; ?>
+    <script src="../script.js"></script>
+    <script>
+        function scrollRight() {
+            const container = document.getElementById('scrollcontainer');
+            container.scrollBy({ left: 300, behavior: 'smooth' });
+        }
+    </script>
+</body>
+
+</html>

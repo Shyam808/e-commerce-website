@@ -1,0 +1,175 @@
+body.register-page {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    position: relative;
+    overflow: hidden;
+    /* border-radius: 15px; */
+}
+
+body.register-page::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 60%);
+    animation: rotate 20s linear infinite;
+    z-index: 0;
+
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.register-box {
+    margin: 5% auto;
+    z-index: 1;
+}
+
+.card {
+    border-radius: 15px;
+    border: none;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.95);
+    transition: transform 0.3s ease;
+    overflow: hidden;
+}
+
+.register-card-body,
+.login-card-body {
+    background-color: transparent !important;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.register-logo a {
+    color: #ffffff !important;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    font-weight: 700 !important;
+    letter-spacing: 1px;
+}
+
+.btn-primary {
+    background: linear-gradient(to right, #1e3c72, #2a5298);
+    border: none;
+    transition: all 0.3s;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(to right, #2a5298, #1e3c72);
+    box-shadow: 0 8px 15px rgba(30, 60, 114, 0.3);
+    transform: translateY(-2px);
+}
+
+.form-control {
+    border-radius: 8px 0 0 8px;
+}
+
+.input-group-text {
+    border-radius: 0 8px 8px 0;
+}
+
+.social-auth-links .btn {
+    border-radius: 8px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.social-auth-links .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+}
+
+
+/* Dashboard */
+.navbar-custom {
+    width: 100%;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.emid {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    color: #fff;
+    font-weight: 700;
+}
+
+.emid i {
+    font-size: 24px;
+    margin: 0 5px;
+    color: #fff !important;
+    transition: transform 0.2s;
+}
+
+.emid a:hover i {
+    transform: scale(1.1);
+}
+
+.emid a {
+    color: #fff;
+    text-decoration: none;
+}
+
+
+
+/* payment */
+.payment-box {
+    margin: 5% auto;
+    z-index: 1;
+}
+
+.payment-card-body {
+    background-color: transparent !important;
+}
+
+.payment-card:hover {
+    transform: translateY(-5px);
+}
+
+.payment-logo a {
+    color: #ffffff !important;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    font-weight: 700 !important;
+    letter-spacing: 1px;
+}
+
+.btn-primary {
+    background: linear-gradient(to right, #1e3c72, #2a5298);
+    border: none;
+    transition: all 0.3s;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(to right, #2a5298, #1e3c72);
+    box-shadow: 0 8px 15px rgba(30, 60, 114, 0.3);
+    transform: translateY(-2px);
+}
+
+.form-control {
+    border-radius: 8px 0 0 8px;
+}
+
+.input-group-text {
+    border-radius: 0 8px 8px 0;
+}
+
+.social-auth-links .btn {
+    border-radius: 8px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.social-auth-links .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+}
