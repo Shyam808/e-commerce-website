@@ -74,6 +74,7 @@ if ($customer_count_query) {
                     transform: translateX(8px);
                     box-shadow: 0 10px 18px rgba(40, 116, 240, 0.16);">Dashboard</a>
                 <a href="manage_items.php">Manage Product</a>
+                <a href="view_product.php">View Product</a>                
                 <a href="../index.php">View Store</a>
                 <a href="orders.php">Orders</a>
                 <a href="customers.php">Customers</a>

@@ -15,7 +15,7 @@ if (!isset($_SESSION['email'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Customers</title>
+    <title>View Produts</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
@@ -61,67 +61,68 @@ if (!isset($_SESSION['email'])) {
                 <h3>Admin Panel</h3>
                 <a href="admin_dashboard.php">Dashboard</a>
                 <a href="manage_items.php">Manage Product</a>
-                <a href="view_product.php">View Product</a>
-                <a href="../index.php">View Store</a>
-                <a href="orders.php">Orders</a>
-                <a href="customers.php" style=" color: #2874f0;
+                <a href="view_product.php" style=" color: #2874f0;
                     text-decoration: none;
                     background-color: rgb(229, 233, 255);
                     border: 2px solid #2874f0;
-                    transform: translateX(8px);
-                    box-shadow: 0 10px 18px rgba(40, 116, 240, 0.16);">Customers</a>
+                    transform: translateX(8px);">View product</a>
+                <a href="../index.php">View Store</a>
+                <a href="orders.php">Orders</a>
+                <a href="customers.php">Customers</a>
                 <a class="log" href="logout.php">Logout</a>
             </div>
         </div>
 
         <div class="dashboard-content">
             <div class="sh">
-                <h2>Manage Customers</h2>
-                <p>This is the manage customers page. You can add, edit, or delete customers from here.</p>
+                <h2>Manage Products</h2>
+                <p>This is the manage Products page. You can add, edit, or delete Products from here.</p>
             </div>
             <div class="tab">
-                <form action="" method="post">
-                    <h3>Manage Customers</h3>
-                    <div class="form-grid">
-                        <?php
-                        $query = "SELECT * FROM register";
-                        $result = mysqli_query($conn, $query);
-                        if (mysqli_num_rows($result) > 0) {  ?>
-                            <table class='table table-bordered'>
+                <h3>Products</h3>
+                <div class="table-wrap">
+                    <?php
+                    $query = "SELECT * FROM products";
+                    $result = mysqli_query($conn, $query);
+                    if (mysqli_num_rows($result) > 0) { ?>
+                        <table class="table order-table">
+                            <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Username</th>
-                                    <th>Email</th>
-                                    <th>Password</th>
+                                    <th>product id</th>
+                                    <th>Product Name</th>
+                                    <th>Category</th>
+                                    <th>Price</th>
+                                    <th>Description</th>
+                                    <th>Image Url</th>
+                                    <th>Stock</th>
+                                    <th>Status</th>
                                     <th colspan="2">Actions</th>
                                 </tr>
-                            <?php    
-                            while ($row = mysqli_fetch_assoc($result)) {  ?>
-                                <tr>
-                                    <td><?php echo $row['id']; ?></td>
-                                    <td><?php echo $row['username']; ?></td>
-                                    <td><?php echo $row['email']; ?></td>
-                                    <td><?php echo $row['password']; ?></td>
-                                    <td>
-                                        <a href='edit_customer.php?id=<?php echo $row['id']; ?>' class='btn btn-primary btn-sm'>Edit</a>
-                                    </td>
-                                    <td>
-                                        <a href='delete_customer.php?id=<?php echo $row['id']; ?>' class='btn btn-danger btn-sm'>Delete</a>
-                                    </td>
-                                </tr>
-                            <?php    
-                            }
-                            echo "</table>";
-                        } else {
-                            echo "<p>No customers found.</p>";
-                        }
-                        ?>
-                    </div>
-                    <div class="form-actions">
-                        <!-- <input type="submit" name="edit_customer" value="Edit Customer">
-                        <input type="submit" name="cancle" value="Cancel"> -->
-                    </div>
-                </form>
+                            </thead>
+                            <tbody>
+                                <?php while ($row = mysqli_fetch_assoc($result)) { ?>
+                                    <tr>
+                                        <td><?php echo $row['id']; ?></td>
+                                        <td><?php echo $row['source_product_id']; ?></td>
+                                        <td><?php echo $row['product_name']; ?></td>
+                                        <td><?php echo $row['category']; ?></td>
+                                        <td><?php echo $row['price']; ?></td>
+                                        <td><?php echo $row['description']; ?></td>
+                                        <td><?php echo $row['image_url']; ?></td>
+                                        <td><?php echo $row['stock']; ?></td>
+                                        <td><?php echo $row['status']; ?></td>
+                                        <td><a href="manage_items.php?id=<?php echo $row['id']; ?>" class="btn btn-primary btn-sm">Edit</a></td>
+                                        <td onclick="return(confrim 'Are you sure! TO delete this products.')"><a href="delete_product.php?id=<?php echo $row['id']; ?>" class="btn btn-primary btn-sm">Delete</a></td>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+                        </table>
+                    <?php } else {
+                        echo "<p>No orders found.</p>";
+                    }
+                    ?>
+                </div>
             </div>
         </div>
     </div>

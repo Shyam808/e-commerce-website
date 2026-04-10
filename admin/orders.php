@@ -61,6 +61,7 @@ if (!isset($_SESSION['email'])) {
                 <h3>Admin Panel</h3>
                 <a href="admin_dashboard.php">Dashboard</a>
                 <a href="manage_items.php">Manage Product</a>
+                <a href="view_product.php">View Product</a>
                 <a href="../index.php">View Store</a>
                 <a href="orders.php" style=" color: #2874f0;
                     text-decoration: none;

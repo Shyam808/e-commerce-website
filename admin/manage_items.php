@@ -7,6 +7,95 @@ if (!isset($_SESSION['email'])) {
     exit();
 }
 
+$categories = [
+    "fashion",
+    "mobiles",
+    "books",
+    "electronics",
+    "headphone",
+    "home",
+    "appliances",
+    "toys & games",
+    "food & health",
+    "auto accessories",
+    "2-wheeler",
+    "sports",
+    "beauty",
+    "furniture"
+];
+
+$product = [
+    "product_name" => "",
+    "category" => "",
+    "price" => "",
+    "description" => "",
+    "image_url" => "",
+    "stock" => "",
+    "status" => ""
+];
+
+$edit_id = isset($_GET["id"]) ? (int) $_GET["id"] : 0;
+$is_edit_mode = false;
+
+if ($edit_id > 0) {
+    $select = "SELECT * FROM products WHERE id = $edit_id";
+    $result = mysqli_query($conn, $select);
+
+    if ($result && mysqli_num_rows($result) > 0) {
+        $product = mysqli_fetch_assoc($result);
+        $is_edit_mode = true;
+    }
+}
+
+if (isset($_POST["add_product"])) {
+    $product_name = mysqli_real_escape_string($conn, $_POST["product_name"]);
+    $category = mysqli_real_escape_string($conn, $_POST["category"]);
+    $price = mysqli_real_escape_string($conn, $_POST["price"]);
+    $description = mysqli_real_escape_string($conn, $_POST["description"]);
+    $image_url = mysqli_real_escape_string($conn, $_POST["image_url"]);
+    $stock = mysqli_real_escape_string($conn, $_POST["stock"]);
+    $status = mysqli_real_escape_string($conn, $_POST["status"]);
+
+    $query = "INSERT INTO products (product_name, category, price, description, image_url, stock, status)
+              VALUES ('$product_name', '$category', '$price', '$description', '$image_url', '$stock', '$status')";
+    $data = mysqli_query($conn, $query);
+
+    if ($data) {
+        echo "<script>alert('Product added successfully.'); window.location.href='view_product.php';</script>";
+        exit();
+    } else {
+        echo "ERROR " . mysqli_error($conn);
+    }
+}
+
+if (isset($_POST["update_product"])) {
+    $update_id = (int) $_POST["id"];
+    $product_name = mysqli_real_escape_string($conn, $_POST["product_name"]);
+    $category = mysqli_real_escape_string($conn, $_POST["category"]);
+    $price = mysqli_real_escape_string($conn, $_POST["price"]);
+    $description = mysqli_real_escape_string($conn, $_POST["description"]);
+    $image_url = mysqli_real_escape_string($conn, $_POST["image_url"]);
+    $stock = mysqli_real_escape_string($conn, $_POST["stock"]);
+    $status = mysqli_real_escape_string($conn, $_POST["status"]);
+
+    $query = "UPDATE products
+              SET product_name = '$product_name',
+                  category = '$category',
+                  price = '$price',
+                  description = '$description',
+                  image_url = '$image_url',
+                  stock = '$stock',
+                  status = '$status'
+              WHERE id = $update_id";
+    $data = mysqli_query($conn, $query);
+
+    if ($data) {
+        echo "<script>alert('Product updated successfully.'); window.location.href='view_product.php';</script>";
+        exit();
+    } else {
+        echo "ERROR " . mysqli_error($conn);
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -19,7 +108,7 @@ if (!isset($_SESSION['email'])) {
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-
+    
 </head>
 
 <body>
@@ -66,6 +155,7 @@ if (!isset($_SESSION['email'])) {
                     border: 2px solid #2874f0;
                     transform: translateX(8px);
                     box-shadow: 0 10px 18px rgba(40, 116, 240, 0.16);">Manage Product</a>
+                <a href="view_product.php">View Product</a>
                 <a href="../index.php">View Store</a>
                 <a href="orders.php">Orders</a>
                 <a href="customers.php">Customers</a>
@@ -76,51 +166,64 @@ if (!isset($_SESSION['email'])) {
         <div class="dashboard-content">
             <div class="sh">
                 <h2>Manage Products</h2>
-                <p>This is the manage products page. You can add, edit, or delete products from here.</p>
+                <p>
+                    <?php echo $is_edit_mode ? "Edit the selected product details below." : "This is the manage products page. You can add new products from here."; ?>
+                </p>
             </div>
             <div class="tab">
                 <form action="" method="post">
-                    <h3>Add New Product</h3>
+                    <?php if ($is_edit_mode) { ?>
+                        <input type="hidden" name="id" value="<?php echo (int) $product["id"]; ?>">
+                    <?php } ?>
+
+                    <h3><?php echo $is_edit_mode ? "Edit Product" : "Add New Product"; ?></h3>
+
                     <div class="form-grid">
-                        <input type="text" name="product_name" placeholder="Product Name">
-                        <select name="category">
+                        <input type="text" name="product_name" placeholder="Product Name"
+                            value="<?php echo htmlspecialchars($product["product_name"]); ?>" required>
+
+                        <select name="category" required>
                             <option value="">Select Category</option>
-                            <option value="fashion">Fashion</option>
-                            <option value="mobiles">Mobiles</option>
-                            <option value="books">Books</option>
-                            <option value="electronics">Electronics</option>
-                            <option value="headphone">headphone</option>
-                            <option value="home">home</option>
-                            <option value="appliances">appliances</option>
-                            <option value="toys & games">toys & games</option>
-                            <option value="food & health">food & health</option>
-                            <option value="auto accessories">auto accessories</option>
-                            <option value="2-wheeler">2-wheeler</option>
-                            <option value="sports">sports</option> 
-                            <option value="beauty">beauty</option>
-                            <option value="furniture">Furniture</option>
+                            <?php foreach ($categories as $category) { ?>
+                                <option value="<?php echo htmlspecialchars($category); ?>"
+                                    <?php echo $product["category"] === $category ? "selected" : ""; ?>>
+                                    <?php echo htmlspecialchars(ucwords($category)); ?>
+                                </option>
+                            <?php } ?>
                         </select>
-                        <input type="text" name="price" placeholder="Product Price">
-                        <input type="text" name="description" placeholder="Product Description">
-                        <input type="text" name="image_url" placeholder="Product Image URL">
-                        <input type="text" name="stock" placeholder="Product Stock">
-                        <select name="status">
+
+                        <input type="text" name="price" placeholder="Product Price"
+                            value="<?php echo htmlspecialchars($product["price"]); ?>" required>
+
+                        <input type="text" name="description" placeholder="Product Description"
+                            value="<?php echo htmlspecialchars($product["description"]); ?>" required>
+
+                        <input type="text" name="image_url" placeholder="Product Image URL"
+                            value="<?php echo htmlspecialchars($product["image_url"]); ?>" required>
+
+                        <input type="text" name="stock" placeholder="Product Stock"
+                            value="<?php echo htmlspecialchars($product["stock"]); ?>" required>
+
+                        <select name="status" required>
                             <option value="">Select Status</option>
-                            <option value="active">Active</option>
-                            <option value="inactive">Inactive</option>
+                            <option value="active" <?php echo $product["status"] === "active" ? "selected" : ""; ?>>Active</option>
+                            <option value="inactive" <?php echo $product["status"] === "inactive" ? "selected" : ""; ?>>Inactive</option>
                         </select>
                     </div>
+
                     <div class="form-actions">
-                        <input type="submit" name="add_product" value="Add Product">
-                        <input type="submit" name="cancle" value="Cancel">
+                        <?php if ($is_edit_mode) { ?>
+                            <input type="submit" name="update_product" value="Update Product">
+                            <a href="manage_items.php" class="btn btn-primary btn-sm">Cancel</a>
+                        <?php } else { ?>
+                            <input type="submit" name="add_product" value="Add Product">
+                            <input type="reset" value="Clear" class="btn btn-primary btn-sm">
+                        <?php } ?>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-
-
-
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.2/js/bootstrap.bundle.min.js"></script>
