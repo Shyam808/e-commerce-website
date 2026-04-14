@@ -200,7 +200,7 @@ foreach ($products as $catalogProduct) {
                         style="border-radius: 20px; background: #fff; padding-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-top: 5px;">
                         <div class="section-header"
                             style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f0f0f0; padding: 15px;">
-                            <h2 style="margin: 0; font-size: 22px; font-weight: 500;">Best Home Appliances</h2>
+                            <h2 style="margin: 0; font-size: 22px; font-weight: 500;">Best Appliances</h2>
                             <!-- <button class="btn btn-primary rounded-circle" style="width: 32px; height: 32px; padding: 0; display: flex; align-items: center; justify-content: center;"><i class="fas fa-chevron-right"></i></button> -->
                         </div>
                         <div class="row m-0 p-3" style="display: flex; flex-wrap: wrap;">

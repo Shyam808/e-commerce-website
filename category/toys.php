@@ -190,32 +190,23 @@ if (isset($_POST['add_to_cart'])) {
                 <div class="container" style="max-width: 1800px;">
 
                     <?php
-                    // $toys = [];
-                    // foreach ($products as $catalogProduct) {
-                    //     $catalogId = isset($catalogProduct['id']) ? (int) $catalogProduct['id'] : 0;
-                    //     if ($catalogId >= 125 && $catalogId <= 132) {
-                    //         $toys[] = [
-                    //             'id' => $catalogId,
-                    //             'name' => $catalogProduct['name'],
-                    //             'price' => '₹' . number_format((float) (isset($catalogProduct['price']) ? $catalogProduct['price'] : 0), 0),
-                    //             'desc' => isset($catalogProduct['desc']) ? $catalogProduct['desc'] : '',
-                    //             'img' => isset($catalogProduct['image']) ? $catalogProduct['image'] : ''
-                    //         ];
-                    //     }
-                    // }
                     $toys = [];
-
-                    $query = "SELECT * FROM products WHERE category='toys' OR category='Toys'";
+                    $query = "SELECT * FROM products
+                              WHERE LOWER(TRIM(category)) IN ('toys', 'toys & games', 'toys, games')";
                     $result = mysqli_query($conn, $query);
 
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        $toys[] = [
-                            'id' => $row['id'],
-                            'name' => $row['product_name'],
-                            'price' => '₹' . number_format($row['price']),
-                            'desc' => $row['description'],
-                            'img' => $row['image_url']
-                        ];
+                    if ($result) {
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            $detail_id = !empty($row['source_product_id']) ? (int) $row['source_product_id'] : (int) $row['id'];
+                            $toys[] = [
+                                'id' => $detail_id,
+                                'db_id' => (int) $row['id'],
+                                'name' => $row['product_name'],
+                                'price' => '₹' . number_format((float) $row['price']),
+                                'desc' => $row['description'],
+                                'img' => $row['image_url']
+                            ];
+                        }
                     }
                     ?>
 
@@ -224,50 +215,58 @@ if (isset($_POST['add_to_cart'])) {
                         <div class="section-header"
                             style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f0f0f0; padding: 15px;">
                             <h2 style="margin: 0; font-size: 22px; font-weight: 500;">Best Toys and Games</h2>
-                            <!-- <button class="btn btn-primary rounded-circle" style="width: 32px; height: 32px; padding: 0; display: flex; align-items: center; justify-content: center;"><i class="fas fa-chevron-right"></i></button> -->
+                            <!-- <button class="    btn btn-primary rounded-circle" style="width: 32px; height: 32px; padding: 0; display: flex; align-items: center; justify-content: center;"><i class="fas fa-chevron-right"></i></button> -->
                         </div>
                         <div class="row m-0 p-3" style="display: flex; flex-wrap: wrap;">
-                            <?php foreach ($toys as $toy): ?>
-                                <div class="p-2" style="flex: 0 0 calc(100% / 5); max-width: calc(100% / 5);">
-                                    <div class="card product-card"
-                                        style="border: none; position: relative; height: 100%; transition: transform 0.2s; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
-                                        <div
-                                            style="height: 180px; display: flex; align-items: center; justify-content: center; padding: 15px;">
-                                            <img src="<?php echo $toy['img']; ?>"
-                                                style="max-height: 100%; max-width: 100%; object-fit: contain;"
-                                                alt="<?php echo htmlspecialchars($toy['name']); ?>">
-                                        </div>
-                                        <div class="card-body text-center" style="padding: 10px;">
-                                            <div class="card-head"
-                                                style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 5px;">
-                                                <a href="../products.php?id=<?php echo $toy['id']; ?>"
-                                                    style="text-decoration: none; color: #212121; font-weight: 500; font-size: 14px;">
-                                                    <?php echo htmlspecialchars($toy['name']); ?>
-                                                </a>
+                            <?php if (!empty($toys)): ?>
+                                <?php foreach ($toys as $toy): ?>
+                                    <div class="p-2" style="flex: 0 0 calc(100% / 5); max-width: calc(100% / 5);">
+                                        <div class="card product-card"
+                                            style="border: none; position: relative; height: 100%; transition: transform 0.2s; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+                                            <div
+                                                style="height: 180px; display: flex; align-items: center; justify-content: center; padding: 15px;">
+                                                <img src="<?php echo $toy['img']; ?>"
+                                                    style="max-height: 100%; max-width: 100%; object-fit: contain;"
+                                                    alt="<?php echo htmlspecialchars($toy['name']); ?>">
                                             </div>
-                                            <div class="card-text"
-                                                style="color: #388e3c; font-weight: 500; font-size: 14px; margin-bottom: 3px;">
-                                                <?php echo htmlspecialchars($toy['price']); ?>
+                                            <div class="card-body text-center" style="padding: 10px;">
+                                                <div class="card-head"
+                                                    style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 5px;">
+                                                    <a href="../products.php?id=<?php echo $toy['id']; ?>"
+                                                        style="text-decoration: none; color: #212121; font-weight: 500; font-size: 14px;">
+                                                        <?php echo htmlspecialchars($toy['name']); ?>
+                                                    </a>
+                                                </div>
+                                                <div class="card-text"
+                                                    style="color: #388e3c; font-weight: 500; font-size: 14px; margin-bottom: 3px;">
+                                                    <?php echo htmlspecialchars($toy['price']); ?>
+                                                </div>
+                                                <div class="text-muted"
+                                                    style="font-size: 12px; margin-bottom: 10px; color: #878787 !important;">
+                                                    <?php echo htmlspecialchars($toy['desc']); ?>
+                                                </div>
+                                                <form method="POST" class="text-center mt-auto d-inline-block w-100">
+                                                    <input type="hidden" name="product_id" value="<?php echo $toy['id']; ?>">
+                                                    <input type="hidden" name="product_name"
+                                                        value="<?php echo htmlspecialchars($toy['name']); ?>">
+                                                    <input type="hidden" name="product_image"
+                                                        value="<?php echo $toy['img']; ?>">
+                                                    <button type="submit" name="add_to_cart"
+                                                        class="btn btn-primary btn-sm w-100">
+                                                        <i class="fa-solid fa-cart-arrow-down mr-1"></i> Add To Cart
+                                                    </button>
+                                                </form>
                                             </div>
-                                            <div class="text-muted"
-                                                style="font-size: 12px; margin-bottom: 10px; color: #878787 !important;">
-                                                <?php echo htmlspecialchars($toy['desc']); ?>
-                                            </div>
-                                            <form method="POST" class="text-center mt-auto d-inline-block w-100">
-                                                <input type="hidden" name="product_id" value="<?php echo $toy['id']; ?>">
-                                                <input type="hidden" name="product_name"
-                                                    value="<?php echo htmlspecialchars($toy['name']); ?>">
-                                                <input type="hidden" name="product_image"
-                                                    value="<?php echo $toy['img']; ?>">
-                                                <button type="submit" name="add_to_cart"
-                                                    class="btn btn-primary btn-sm w-100">
-                                                    <i class="fa-solid fa-cart-arrow-down mr-1"></i> Add To Cart
-                                                </button>
-                                            </form>
                                         </div>
                                     </div>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <div class="col-12">
+                                    <p style="margin: 0; padding: 24px; text-align: center; color: #666;">
+                                        No toys or games products found right now.
+                                    </p>
                                 </div>
-                            <?php endforeach; ?>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>

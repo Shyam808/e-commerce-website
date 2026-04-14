@@ -102,9 +102,9 @@ if (!isset($_SESSION['email'])) {
                                     <td><?php echo $row['username']; ?></td>
                                     <td><?php echo $row['email']; ?></td>
                                     <td><?php echo $row['password']; ?></td>
-                                    <td>
+                                    <!-- <td>
                                         <a href='edit_customer.php?id=<?php echo $row['id']; ?>' class='btn btn-primary btn-sm'>Edit</a>
-                                    </td>
+                                    </td> -->
                                     <td>
                                         <a href='delete_customer.php?id=<?php echo $row['id']; ?>' class='btn btn-danger btn-sm'>Delete</a>
                                     </td>

@@ -113,7 +113,8 @@ if (!isset($_SESSION['email'])) {
                                         <td><?php echo $row['stock']; ?></td>
                                         <td><?php echo $row['status']; ?></td>
                                         <td><a href="manage_items.php?id=<?php echo $row['id']; ?>" class="btn btn-primary btn-sm">Edit</a></td>
-                                        <td onclick="return(confrim 'Are you sure! TO delete this products.')"><a href="delete_product.php?id=<?php echo $row['id']; ?>" class="btn btn-primary btn-sm">Delete</a></td>
+                                        <td><a onclick="return confirm('Are you sure! TO delete this products.')" 
+                                            href="delete_product.php?id=<?php echo $row['id']; ?>" class="btn btn-primary btn-sm">Delete</a></td>
                                     </tr>
                                 <?php } ?>
                             </tbody>
