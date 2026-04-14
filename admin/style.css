@@ -161,6 +161,8 @@ body {
   margin: 0;
   padding: 14px;
   box-shadow: 0 10px 30px rgba(77, 90, 130, 0.1);
+  position: sticky;
+  top: 20px;
 }
 
 .left {
