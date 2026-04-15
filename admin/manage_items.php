@@ -2,7 +2,7 @@
 session_start();
 include "../db.php";
 
-if (!isset($_SESSION['email'])) {
+if (!isset($_SESSION['email1'])) {
     header("Location: admin_login.php");
     exit();
 }
@@ -31,8 +31,15 @@ $product = [
     "description" => "",
     "image_url" => "",
     "stock" => "",
-    "status" => ""
+    "status" => "",
+    "source_product_id" => ""
 ];
+
+$has_source_product_id = false;
+$column_result = mysqli_query($conn, "SHOW COLUMNS FROM products LIKE 'source_product_id'");
+if ($column_result && mysqli_num_rows($column_result) > 0) {
+    $has_source_product_id = true;
+}
 
 $edit_id = isset($_GET["id"]) ? (int) $_GET["id"] : 0;
 $is_edit_mode = false;
@@ -55,12 +62,23 @@ if (isset($_POST["add_product"])) {
     $image_url = mysqli_real_escape_string($conn, $_POST["image_url"]);
     $stock = mysqli_real_escape_string($conn, $_POST["stock"]);
     $status = mysqli_real_escape_string($conn, $_POST["status"]);
+    $source_product_id = isset($_POST["source_product_id"]) ? (int) $_POST["source_product_id"] : 0;
 
-    $query = "INSERT INTO products (product_name, category, price, description, image_url, stock, status)
-              VALUES ('$product_name', '$category', '$price', '$description', '$image_url', '$stock', '$status')";
+    if ($has_source_product_id) {
+        $source_product_value = $source_product_id > 0 ? $source_product_id : "NULL";
+        $query = "INSERT INTO products (product_name, category, price, description, image_url, stock, status, source_product_id)
+                  VALUES ('$product_name', '$category', '$price', '$description', '$image_url', '$stock', '$status', $source_product_value)";
+    } else {
+        $query = "INSERT INTO products (product_name, category, price, description, image_url, stock, status)
+                  VALUES ('$product_name', '$category', '$price', '$description', '$image_url', '$stock', '$status')";
+    }
     $data = mysqli_query($conn, $query);
 
     if ($data) {
+        if ($has_source_product_id && $source_product_id <= 0) {
+            $new_id = (int) mysqli_insert_id($conn);
+            mysqli_query($conn, "UPDATE products SET source_product_id = $new_id WHERE id = $new_id");
+        }
         echo "<script>alert('Product added successfully.'); window.location.href='view_product.php';</script>";
         exit();
     } else {
@@ -77,6 +95,7 @@ if (isset($_POST["update_product"])) {
     $image_url = mysqli_real_escape_string($conn, $_POST["image_url"]);
     $stock = mysqli_real_escape_string($conn, $_POST["stock"]);
     $status = mysqli_real_escape_string($conn, $_POST["status"]);
+    $source_product_id = isset($_POST["source_product_id"]) ? (int) $_POST["source_product_id"] : 0;
 
     $query = "UPDATE products
               SET product_name = '$product_name',
@@ -85,7 +104,15 @@ if (isset($_POST["update_product"])) {
                   description = '$description',
                   image_url = '$image_url',
                   stock = '$stock',
-                  status = '$status'
+                  status = '$status'";
+
+    if ($has_source_product_id) {
+        $source_product_value = $source_product_id > 0 ? $source_product_id : $update_id;
+        $query .= ",
+                  source_product_id = $source_product_value";
+    }
+
+    $query .= "
               WHERE id = $update_id";
     $data = mysqli_query($conn, $query);
 
@@ -129,7 +156,7 @@ if (isset($_POST["update_product"])) {
                     class="nav-link dropdown-toggle"
                     style="color: #000; font-weight: 500; display:flex; align-items:center;"><i
                         class="far fa-user-circle mr-2"
-                        style="font-size: 20px;"></i><?php echo htmlspecialchars($_SESSION['email']); ?></a>
+                        style="font-size: 20px;"></i><?php echo htmlspecialchars($_SESSION['email1']); ?></a>
                 <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
                     <li><a href="orders.php" class="dropdown-item text-dark">Orders</a></li>
                     <li><a href="payment.php" class="dropdown-item text-dark">Payments</a></li>
@@ -200,6 +227,11 @@ if (isset($_POST["update_product"])) {
 
                         <input type="text" name="image_url" placeholder="Product Image URL"
                             value="<?php echo htmlspecialchars($product["image_url"]); ?>" required>
+
+                        <?php if ($has_source_product_id) { ?>
+                            <input type="number" name="source_product_id" placeholder="Product Detail ID"
+                                value="<?php echo htmlspecialchars((string) ($product["source_product_id"] ?: "")); ?>" min="1">
+                        <?php } ?>
 
                         <input type="text" name="stock" placeholder="Product Stock"
                             value="<?php echo htmlspecialchars($product["stock"]); ?>" required>

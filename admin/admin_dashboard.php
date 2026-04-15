@@ -2,7 +2,7 @@
 session_start();
 include "../db.php";
 
-if (!isset($_SESSION['email'])) {
+if (!isset($_SESSION['email1'])) {
     header("Location: admin_login.php");
     exit();
 }
@@ -48,7 +48,7 @@ if ($customer_count_query) {
                     class="nav-link dropdown-toggle"
                     style="color: #000; font-weight: 500; display:flex; align-items:center;"><i
                         class="far fa-user-circle mr-2"
-                        style="font-size: 20px;"></i><?php echo htmlspecialchars($_SESSION['email']); ?></a>
+                        style="font-size: 20px;"></i><?php echo htmlspecialchars($_SESSION['email1']); ?></a>
                 <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
                     <li><a href="orders.php" class="dropdown-item text-dark">Orders</a></li>
                     <li><a href="payment.php" class="dropdown-item text-dark">Payments</a></li>

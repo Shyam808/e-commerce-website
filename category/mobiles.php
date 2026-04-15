@@ -26,6 +26,7 @@ if (isset($_POST['add_to_cart'])) {
     }
 }
 
+$mobileProducts = [];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -266,6 +267,57 @@ if (isset($_POST['add_to_cart'])) {
                         }
                     }
                     ?>
+                    <?php
+                    $dbmobileProducts = [];
+                    $query = "SELECT * FROM products
+                              WHERE LOWER(TRIM(category)) = 'mobile'";
+                    $result = mysqli_query($conn, $query);
+
+                    if ($result) {
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            $detail_id = !empty($row['source_product_id']) ? (int) $row['source_product_id'] : (int) $row['id'];
+                            $dbmobileProducts[] = [
+                                'id' => $detail_id,
+                                'db_id' => (int) $row['id'],
+                                'name' => $row['product_name'],
+                                'price' => (float) $row['price'],
+                                'desc' => $row['description'],
+                                'img' => $row['image_url']
+                            ];
+                        }
+                    }
+
+                    $mobileProducts = $mobiles;
+
+                    $existingMobileIds = [];
+                    foreach ($mobileProducts as $mobileProduct) {
+                        $existingMobileIds[(int) $mobileProduct['id']] = true;
+                    }
+
+                    $query = "SELECT * FROM products
+                              WHERE LOWER(TRIM(category)) IN ('mobile', 'mobiles')";
+                    $result = mysqli_query($conn, $query);
+
+                    if ($result) {
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            $detail_id = !empty($row['source_product_id']) ? (int) $row['source_product_id'] : (int) $row['id'];
+
+                            if (isset($existingMobileIds[$detail_id])) {
+                                continue;
+                            }
+
+                            $mobileProducts[] = [
+                                'id' => $detail_id,
+                                'db_id' => (int) $row['id'],
+                                'name' => $row['product_name'],
+                                'price' => '₹' . number_format((float) $row['price'], 0),
+                                'desc' => $row['description'],
+                                'img' => $row['image_url']
+                            ];
+                            $existingMobileIds[$detail_id] = true;
+                        }
+                    }
+                    ?>
                     <div class="parent-nano"
                         style="width: 1500px; border-radius: 20px; background: #fff; gap: 15px; padding-bottom: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-top: 20px;">
                         <div class="nano-mobiles">
@@ -307,7 +359,7 @@ if (isset($_POST['add_to_cart'])) {
                             <!-- <button class="btn btn-primary rounded-circle" style="width: 32px; height: 32px; padding: 0; display: flex; align-items: center; justify-content: center;"><i class="fas fa-chevron-right"></i></button> -->
                         </div>
                         <div class="row m-0 p-3" style="display: flex; flex-wrap: wrap;">
-                            <?php foreach ($mobiles as $mobile): ?>
+                            <?php foreach ($mobileProducts as $mobile): ?>
                                 <div class="p-2" style="flex: 0 0 calc(100% / 5); max-width: calc(100% / 5);">
                                     <div class="card product-card"
                                         style="border: none; position: relative; height: 100%; transition: transform 0.2s; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">

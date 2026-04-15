@@ -26,6 +26,7 @@ if (isset($_POST['add_to_cart'])) {
     }
 }
 
+$bookProducts = [];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -259,44 +260,76 @@ if (isset($_POST['add_to_cart'])) {
                     </div> -->
                     <div class="product-wrapper"
                         style="border-radius: 20px; background: #fff; padding-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-top: 5px;">
+                        <?php
+                    $bookProducts = $books;
+
+                    $existingbookIds = [];
+                    foreach ($bookProducts as $bookProduct) {
+                        $existingbookIds[(int) $bookProduct['id']] = true;
+                    }
+
+                    $query = "SELECT * FROM products
+                              WHERE LOWER(TRIM(category)) IN ('book', 'books')";
+                    $result = mysqli_query($conn, $query);
+
+                    if ($result) {
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            $detail_id = !empty($row['source_product_id']) ? (int) $row['source_product_id'] : (int) $row['id'];
+
+                            if (isset($existingbookIds[$detail_id])) {
+                                continue;
+                            }
+
+                            $bookProducts[] = [
+                                'id' => $detail_id,
+                                'db_id' => (int) $row['id'],
+                                'name' => $row['product_name'],
+                                'price' => '₹' . number_format((float) $row['price'], 0),
+                                'desc' => $row['description'],
+                                'img' => $row['image_url']
+                            ];
+                            $existingbookIds[$detail_id] = true;
+                        }
+                    }
+                    ?>
                         <div class="section-header"
                             style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f0f0f0; padding: 15px;">
                             <h2 style="margin: 0; font-size: 22px; font-weight: 500;">Books</h2>
                             <!-- <button class="btn btn-primary rounded-circle" style="width: 32px; height: 32px; padding: 0; display: flex; align-items: center; justify-content: center;"><i class="fas fa-chevron-right"></i></button> -->
                         </div>
                         <div class="row m-0 p-3" style="display: flex; flex-wrap: wrap;">
-                            <?php foreach ($books as $books): ?>
+                            <?php foreach ($bookProducts as $book): ?>
                                 <div class="p-2" style="flex: 0 0 calc(100% / 5); max-width: calc(100% / 5);">
                                     <div class="card product-card"
                                         style="border: none; position: relative; height: 100%; transition: transform 0.2s; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
                                         <div
                                             style="height: 180px; display: flex; align-items: center; justify-content: center; padding: 15px;">
-                                            <img src="<?php echo $books['img']; ?>"
+                                            <img src="<?php echo $book['img']; ?>"
                                                 style="max-height: 100%; max-width: 100%; object-fit: contain;"
-                                                alt="<?php echo htmlspecialchars($books['name']); ?>">
+                                                alt="<?php echo htmlspecialchars($book['name']); ?>">
                                         </div>
                                         <div class="card-body text-center" style="padding: 10px;">
                                             <div class="card-head"
                                                 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 5px;">
-                                                <a href="../products.php?id=<?php echo $books['id']; ?>"
+                                                <a href="../products.php?id=<?php echo $book['id']; ?>"
                                                     style="text-decoration: none; color: #212121; font-weight: 500; font-size: 14px;">
-                                                    <?php echo htmlspecialchars($books['name']); ?>
+                                                    <?php echo htmlspecialchars($book['name']); ?>
                                                 </a>
                                             </div>
                                             <div class="card-text"
                                                 style="color: #388e3c; font-weight: 500; font-size: 14px; margin-bottom: 3px;">
-                                                <?php echo htmlspecialchars($books['price']); ?>
+                                                <?php echo htmlspecialchars($book['price']); ?>
                                             </div>
                                             <div class="text-muted"
                                                 style="font-size: 12px; margin-bottom: 10px; color: #878787 !important;">
-                                                <?php echo htmlspecialchars($books['desc']); ?>
+                                                <?php echo htmlspecialchars($book['desc']); ?>
                                             </div>
                                             <form method="POST" class="text-center mt-auto d-inline-block w-100">
-                                                <input type="hidden" name="product_id" value="<?php echo $books['id']; ?>">
+                                                <input type="hidden" name="product_id" value="<?php echo $book['id']; ?>">
                                                 <input type="hidden" name="product_name"
-                                                    value="<?php echo htmlspecialchars($books['name']); ?>">
+                                                    value="<?php echo htmlspecialchars($book['name']); ?>">
                                                 <input type="hidden" name="product_image"
-                                                    value="<?php echo $books['img']; ?>">
+                                                    value="<?php echo $book['img']; ?>">
                                                 <button type="submit" name="add_to_cart"
                                                     class="btn btn-primary btn-sm w-100">
                                                     <i class="fa-solid fa-cart-arrow-down mr-1"></i> Add To Cart

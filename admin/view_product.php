@@ -2,7 +2,7 @@
 session_start();
 include "../db.php";
 
-if (!isset($_SESSION['email'])) {
+if (!isset($_SESSION['email1'])) {
     header("Location: admin_login.php");
     exit();
 }
@@ -40,7 +40,7 @@ if (!isset($_SESSION['email'])) {
                     class="nav-link dropdown-toggle"
                     style="color: #000; font-weight: 500; display:flex; align-items:center;"><i
                         class="far fa-user-circle mr-2"
-                        style="font-size: 20px;"></i><?php echo htmlspecialchars($_SESSION['email']); ?></a>
+                        style="font-size: 20px;"></i><?php echo htmlspecialchars($_SESSION['email1']); ?></a>
                 <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
                     <li><a href="orders.php" class="dropdown-item text-dark">Orders</a></li>
                     <li><a href="payment.php" class="dropdown-item text-dark">Payments</a></li>
@@ -94,7 +94,7 @@ if (!isset($_SESSION['email'])) {
                                     <th>Category</th>
                                     <th>Price</th>
                                     <th>Description</th>
-                                    <th>Image Url</th>
+                                    <!-- <th>Image Url</th> -->
                                     <th>Stock</th>
                                     <th>Status</th>
                                     <th colspan="2">Actions</th>
@@ -102,14 +102,19 @@ if (!isset($_SESSION['email'])) {
                             </thead>
                             <tbody>
                                 <?php while ($row = mysqli_fetch_assoc($result)) { ?>
+                                    <?php
+                                    $source_product_id = isset($row['source_product_id']) && $row['source_product_id'] !== null && $row['source_product_id'] !== ''
+                                        ? $row['source_product_id']
+                                        : $row['id'];
+                                    ?>
                                     <tr>
                                         <td><?php echo $row['id']; ?></td>
-                                        <td><?php echo $row['source_product_id']; ?></td>
+                                        <td><?php echo $source_product_id; ?></td>
                                         <td><?php echo $row['product_name']; ?></td>
                                         <td><?php echo $row['category']; ?></td>
                                         <td><?php echo $row['price']; ?></td>
                                         <td><?php echo $row['description']; ?></td>
-                                        <td><?php echo $row['image_url']; ?></td>
+                                        <!-- <td><?php //echo $row['image_url']; ?></td> -->
                                         <td><?php echo $row['stock']; ?></td>
                                         <td><?php echo $row['status']; ?></td>
                                         <td><a href="manage_items.php?id=<?php echo $row['id']; ?>" class="btn btn-primary btn-sm">Edit</a></td>

@@ -39,7 +39,9 @@ foreach ($products as $catalogProduct) {
         ];
     }
 }
-?>
+
+$fashionProducts = $defaultFashionProducts;
+?>  
 <!DOCTYPE html>
 <html lang="en">
 
@@ -234,7 +236,31 @@ foreach ($products as $catalogProduct) {
                     </div>
 
                     <div class="product-wrapper" style="border-radius: 20px;">
-                        <div class="section-header">
+                        <?php
+                    $dbFashionProducts = [];
+                    $query = "SELECT * FROM products
+                              WHERE LOWER(TRIM(category)) = 'fashion'";
+                    $result = mysqli_query($conn, $query);
+
+                    if ($result) {
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            $detail_id = !empty($row['source_product_id']) ? (int) $row['source_product_id'] : (int) $row['id'];
+                            $dbFashionProducts[] = [
+                                'id' => $detail_id,
+                                'db_id' => (int) $row['id'],
+                                'name' => $row['product_name'],
+                                'price' => (float) $row['price'],
+                                'desc' => $row['description'],
+                                'img' => $row['image_url']
+                            ];
+                        }
+                    }
+
+                    if (!empty($dbFashionProducts)) {
+                        $fashionProducts = $dbFashionProducts;
+                    }
+                    ?>    
+                    <div class="section-header">
                             <h2 style="margin-left: 15px;">Trending in Fashion</h2>
                             <button class="btn btn-primary rounded-circle" onclick="scrollRight()"
                                 style="width: 32px; height: 32px; padding: 0; margin-right: 15px; display: flex; align-items: center; justify-content: center;"><i
@@ -242,7 +268,7 @@ foreach ($products as $catalogProduct) {
                         </div>
                         <div id="scrollcontainer"
                             class="row m-0 p-3 row-horizontal flex-nowrap scroll-container">
-                            <?php foreach ($defaultFashionProducts as $fashionProduct): ?>
+                            <?php foreach ($fashionProducts as $fashionProduct): ?>
                                 <div class="col-5-card p-2">
                                     <div class="card product-card">
                                         <img src="<?php echo htmlspecialchars($fashionProduct['img']); ?>"

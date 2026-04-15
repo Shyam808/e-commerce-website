@@ -159,9 +159,9 @@ $products = [
     //116 => ['id' => 116, 'name' => 'Fastrack Wayfarer', 'price' => 0, 'original_price' => 0, 'image' => 'https://rukminim2.flixcart.com/fk-p-flap/1620/790/image/9f9bfeab466aed2c.png?q=80', 'desc' => 'Safari trolley bag', 'rating' => 2, 'reviews' => 1259],
 
     // 65 to 84 books products
-    65 => ['id' => 65, 'name' => 'Valmiki Ramayan', 'price' => 199, 'original_price' => 299, 'image' => 'https://rukminim2.flixcart.com/image/1860/1860/xif0q/book/j/h/d/-original-imahgwhequjjwy2g.jpeg?q=90', 'desc' => 'Religious Book', 'rating' => 4.5, 'reviews' => 2543],
+    65 => ['id' => 65, 'name' => 'Valmiki Ramayan', 'price' => 11, 'original_price' => 49, 'image' => 'https://rukminim2.flixcart.com/image/1860/1860/xif0q/book/j/h/d/-original-imahgwhequjjwy2g.jpeg?q=90', 'desc' => 'Religious Book', 'rating' => 4.5, 'reviews' => 2543],
 
-    66 => ['id' => 66, 'name' => 'Bhagavad Gita', 'price' => 149, 'original_price' => 249, 'image' => 'https://rukminim2.flixcart.com/image/1860/1860/xif0q/shopsy-regionalbooks/e/g/k/2019-2019-bhaktivedant-book-trust-hardcover-hindi-bhagwat-gita-original-imahhhhjhwgmzagz.jpeg?q=90', 'desc' => 'Spiritual Book', 'rating' => 4.6, 'reviews' => 3241],
+    66 => ['id' => 66, 'name' => 'Bhagavad Gita', 'price' => 11, 'original_price' => 49, 'image' => 'https://rukminim2.flixcart.com/image/1860/1860/xif0q/shopsy-regionalbooks/e/g/k/2019-2019-bhaktivedant-book-trust-hardcover-hindi-bhagwat-gita-original-imahhhhjhwgmzagz.jpeg?q=90', 'desc' => 'Spiritual Book', 'rating' => 4.6, 'reviews' => 3241],
 
     67 => ['id' => 67, 'name' => 'Sampurna Chanakya Niti', 'price' => 129, 'original_price' => 199, 'image' => 'https://rukminim2.flixcart.com/image/1860/1860/l071d3k0/book/7/5/z/sampurna-chanakya-niti-original-imagcf5qjcpjsemz.jpeg?q=90', 'desc' => 'Motivational Book', 'rating' => 4.3, 'reviews' => 1892],
 
@@ -224,13 +224,48 @@ $products = [
     129 => ['id' => 139, 'name' => 'Door Locks', 'price' => 499, 'original_price' => 699, 'image' => 'https://rukminim2.flixcart.com/fk-p-flap/1670/2520/image/fa72c688263c56c6.jpg?q=80', 'desc' => 'Heavy Door Lock', 'rating' => 4.2, 'reviews' => 276],
     130 => ['id' => 130, 'name' => 'Power Tool', 'price' => 1299, 'original_price' => 1599, 'image' => 'https://rukminim2.flixcart.com/fk-p-flap/1670/2520/image/15a3847c157990f3.jpg?q=80', 'desc' => 'Power Tool Box', 'rating' => 4.4, 'reviews' => 189],
     131 => ['id' => 131, 'name' => 'Extension Board', 'price' => 329, 'original_price' => 499, 'image' => 'https://rukminim2.flixcart.com/fk-p-flap/1670/2520/image/15994633b50b2fa5.jpg?q=80', 'desc' => 'Extension Board 500W', 'rating' => 4.1, 'reviews' => 354],
+  
+    202 => ['id' => 202, 'name' => 'Extension Board', 'price' => 1500, 'original_price' => 2499, 'image' => 'https://rukminim1.flixcart.com/fk-p-flap/380/510/image/974ea1811b2ec366.png?q=80', 'desc' => '21 days battery', 'rating' => 4.1, 'reviews' => 354],
+
 ];
 
 $product_id = isset($_GET['id']) ? (int) $_GET['id'] : 1;
-if (!isset($products[$product_id])) {
-    $product_id = 1;
+$product = null;
+
+if ($product_id > 0) {
+    $db_result = mysqli_query(
+        $conn,
+        "SELECT * FROM products WHERE source_product_id = $product_id OR id = $product_id
+         ORDER BY CASE WHEN source_product_id = $product_id THEN 0 ELSE 1 END
+         LIMIT 1"
+    );
+
+    if (!$db_result) {
+        $db_result = mysqli_query($conn, "SELECT * FROM products WHERE id = $product_id LIMIT 1");
+    }
+
+    if ($db_result && mysqli_num_rows($db_result) > 0) {
+        $db_product = mysqli_fetch_assoc($db_result);
+        $db_price = isset($db_product['price']) ? (float) $db_product['price'] : 0;
+        $product = [
+            'id' => $product_id,
+            'name' => $db_product['product_name'],
+            'price' => $db_price,
+            'original_price' => $db_price,
+            'image' => $db_product['image_url'],
+            'desc' => $db_product['description'],
+            'rating' => 4.2,
+            'reviews' => 0
+        ];
+    }
 }
-$product = $products[$product_id];
+
+if ($product === null) {
+    if (!isset($products[$product_id])) {
+        $product_id = 1;
+    }
+    $product = $products[$product_id];
+}
 
 if (basename($_SERVER['SCRIPT_FILENAME']) !== 'products.php') {
     return;

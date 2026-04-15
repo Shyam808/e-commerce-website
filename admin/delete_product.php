@@ -2,8 +2,14 @@
 session_start();
 include "../db.php";
 
-$id = $_GET['id'];
-$query = "DELETE FROM products WHERE id='$id'";
+$id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
+
+if ($id <= 0) {
+    header("Location: view_product.php");
+    exit();
+}
+
+$query = "DELETE FROM products WHERE id = $id";
 $data = mysqli_query($conn, $query);
 if($data){
     echo "<script>alert('Data Deleted!'); 
