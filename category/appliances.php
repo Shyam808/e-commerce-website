@@ -209,7 +209,7 @@ $applianceProducts = [];
                             <!-- <button class="btn btn-primary rounded-circle" style="width: 32px; height: 32px; padding: 0; display: flex; align-items: center; justify-content: center;"><i class="fas fa-chevron-right"></i></button> -->
                         </div>
                         <?php
-                        $applianceProducts = $appliance;
+                        $applianceProducts = $applianceDefaults;
 
                         $existingapplianceIds = [];
                         foreach ($applianceProducts as $applianceProduct) {
@@ -241,7 +241,7 @@ $applianceProducts = [];
                         }
                         ?>
                         <div class="row m-0 p-3" style="display: flex; flex-wrap: wrap;">
-                            <?php foreach ($applianceDefaults as $appliance): ?>
+                            <?php foreach ($applianceProducts as $appliance): ?>
                                 <div class="p-2" style="flex: 0 0 calc(100% / 5); max-width: calc(100% / 5);">
                                     <div class="card product-card"
                                         style="border: none; position: relative; height: 100%; transition: transform 0.2s; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
