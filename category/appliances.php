@@ -29,7 +29,7 @@ if (isset($_POST['add_to_cart'])) {
 $applianceDefaults = [];
 foreach ($products as $catalogProduct) {
     $catalogId = isset($catalogProduct['id']) ? (int) $catalogProduct['id'] : 0;
-    if ($catalogId >= 125 && $catalogId <= 132) {
+    if ($catalogId >= 133 && $catalogId <= 136) {
         $applianceDefaults[] = [
             'id' => $catalogId,
             'name' => $catalogProduct['name'],
@@ -39,6 +39,8 @@ foreach ($products as $catalogProduct) {
         ];
     }
 }
+
+$applianceProducts = [];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -140,17 +142,19 @@ foreach ($products as $catalogProduct) {
                         <i class="fa-solid fa-mobile-screen-button"></i>
                         <span style="font-size: 13px;"><a href="mobiles.php" style="color:#000;">Mobiles</a></span>
                     </div>
-                     <div class="category-item">
+                    <div class="category-item">
                         <i class="fa-solid fa-book"></i>
                         <span style="font-size: 13px;"><a href="books.php" style="color:#000">Books</a></span>
                     </div>
                     <div class="category-item">
                         <i class="fa-solid fa-laptop"></i>
-                        <span style="font-size: 13px;"><a href="electronic.php" style="color:#000;">Electronics</a>a</span>
+                        <span style="font-size: 13px;"><a href="electronic.php"
+                                style="color:#000;">Electronics</a>a</span>
                     </div>
                     <div class="category-item">
                         <i class="fa-solid fa-headset"></i>
-                        <span style="font-size: 13px;"><a href="headphone.php"style="color:#000">Head Phone</a></span></span>
+                        <span style="font-size: 13px;"><a href="headphone.php" style="color:#000">Head
+                                Phone</a></span></span>
                     </div>
                     <div class="category-item">
                         <i class="fa-regular fa-lightbulb"></i>
@@ -158,7 +162,8 @@ foreach ($products as $catalogProduct) {
                     </div>
                     <div class="category-item">
                         <i class="fa-solid fa-tv" style="color: #2874f0;"></i>
-                        <span style="font-size: 13px;"><a href="appliances.php" style="color:#2874f0 !important; font-weight: bold;">Appliances</a></span>
+                        <span style="font-size: 13px;"><a href="appliances.php"
+                                style="color:#2874f0 !important; font-weight: bold;">Appliances</a></span>
                         <div
                             style="height: 2px; background-color: #2874f0; width: 100%; margin-top: 5px; border-radius: 2px;">
                         </div>
@@ -183,7 +188,7 @@ foreach ($products as $catalogProduct) {
                         <i class="fa-solid fa-baseball-bat-ball"></i>
                         <span style="font-size: 13px;">Sports</span>
                     </div>
-                        <div class="category-item">
+                    <div class="category-item">
                         <i class="fa-solid fa-gem"></i>
                         <span style="font-size: 13px;">Beauty</span>
                     </div>
@@ -195,7 +200,7 @@ foreach ($products as $catalogProduct) {
             </div>
             <div class="content">
                 <div class="container" style="max-width: 1800px;">
-            
+
                     <div class="product-wrapper"
                         style="border-radius: 20px; background: #fff; padding-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-top: 5px;">
                         <div class="section-header"
@@ -203,39 +208,71 @@ foreach ($products as $catalogProduct) {
                             <h2 style="margin: 0; font-size: 22px; font-weight: 500;">Best Appliances</h2>
                             <!-- <button class="btn btn-primary rounded-circle" style="width: 32px; height: 32px; padding: 0; display: flex; align-items: center; justify-content: center;"><i class="fas fa-chevron-right"></i></button> -->
                         </div>
+                        <?php
+                        $applianceProducts = $appliance;
+
+                        $existingapplianceIds = [];
+                        foreach ($applianceProducts as $applianceProduct) {
+                            $existingapplianceIds[(int) $applianceProduct['id']] = true;
+                        }
+
+                        $query = "SELECT * FROM products
+                              WHERE LOWER(TRIM(category)) IN ('appliance', 'appliances')";
+                        $result = mysqli_query($conn, $query);
+
+                        if ($result) {
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                $detail_id = !empty($row['source_product_id']) ? (int) $row['source_product_id'] : (int) $row['id'];
+
+                                if (isset($existingapplianceIds[$detail_id])) {
+                                    continue;
+                                }
+
+                                $applianceProducts[] = [
+                                    'id' => $detail_id,
+                                    'db_id' => (int) $row['id'],
+                                    'name' => $row['product_name'],
+                                    'price' => '₹' . number_format((float) $row['price'], 0),
+                                    'desc' => $row['description'],
+                                    'img' => $row['image_url']
+                                ];
+                                $existingapplianceIds[$detail_id] = true;
+                            }
+                        }
+                        ?>
                         <div class="row m-0 p-3" style="display: flex; flex-wrap: wrap;">
-                            <?php foreach ($applianceDefaults as $home): ?>
+                            <?php foreach ($applianceDefaults as $appliance): ?>
                                 <div class="p-2" style="flex: 0 0 calc(100% / 5); max-width: calc(100% / 5);">
                                     <div class="card product-card"
                                         style="border: none; position: relative; height: 100%; transition: transform 0.2s; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
                                         <div
                                             style="height: 180px; display: flex; align-items: center; justify-content: center; padding: 15px;">
-                                            <img src="<?php echo $home['img']; ?>"
+                                            <img src="<?php echo $appliance['img']; ?>"
                                                 style="max-height: 100%; max-width: 100%; object-fit: contain;"
-                                                alt="<?php echo htmlspecialchars($home['name']); ?>">
+                                                alt="<?php echo htmlspecialchars($appliance['name']); ?>">
                                         </div>
                                         <div class="card-body text-center" style="padding: 10px;">
                                             <div class="card-head"
                                                 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 5px;">
-                                                <a href="../products.php?id=<?php echo $home['id']; ?>"
+                                                <a href="../products.php?id=<?php echo $appliance['id']; ?>"
                                                     style="text-decoration: none; color: #212121; font-weight: 500; font-size: 14px;">
-                                                    <?php echo htmlspecialchars($home['name']); ?>
+                                                    <?php echo htmlspecialchars($appliance['name']); ?>
                                                 </a>
                                             </div>
                                             <div class="card-text"
                                                 style="color: #388e3c; font-weight: 500; font-size: 14px; margin-bottom: 3px;">
-                                                <?php echo htmlspecialchars($home['price']); ?>
+                                                <?php echo htmlspecialchars($appliance['price']); ?>
                                             </div>
                                             <div class="text-muted"
                                                 style="font-size: 12px; margin-bottom: 10px; color: #878787 !important;">
-                                                <?php echo htmlspecialchars($home['desc']); ?>
+                                                <?php echo htmlspecialchars($appliance['desc']); ?>
                                             </div>
                                             <form method="POST" class="text-center mt-auto d-inline-block w-100">
-                                                <input type="hidden" name="product_id" value="<?php echo $home['id']; ?>">
+                                                <input type="hidden" name="product_id" value="<?php echo $appliance['id']; ?>">
                                                 <input type="hidden" name="product_name"
-                                                    value="<?php echo htmlspecialchars($home['name']); ?>">
+                                                    value="<?php echo htmlspecialchars($appliance['name']); ?>">
                                                 <input type="hidden" name="product_image"
-                                                    value="<?php echo $home['img']; ?>">
+                                                    value="<?php echo $appliance['img']; ?>">
                                                 <button type="submit" name="add_to_cart"
                                                     class="btn btn-primary btn-sm w-100">
                                                     <i class="fa-solid fa-cart-arrow-down mr-1"></i> Add To Cart

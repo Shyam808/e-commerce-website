@@ -26,6 +26,7 @@ if (isset($_POST['add_to_cart'])) {
     }
 }
 
+$homeProducts = [];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -88,7 +89,8 @@ if (isset($_POST['add_to_cart'])) {
                                     style="font-size: 20px;"></i><?php echo htmlspecialchars($_SESSION['email']); ?></a>
                             <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
                                 <li><a href="../my_orders.php" class="dropdown-item text-dark">My Orders</a></li>
-                                <li><a href="../payment.php" class="dropdown-item text-dark">Payments</a></li>
+                 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 5px;">
+                                                <a href="../products.php?id=<?php echo $home['id']; ?>"               <li><a href="../payment.php" class="dropdown-item text-dark">Payments</a></li>
                                 <li><a href="../my_wishlist.php" class="dropdown-item text-dark">My Wishlist</a></li>
                                 <li><a href="../cart.php" class="dropdown-item text-dark">My Cart</a></li>
                                 <li><a href="../my_address.php" class="dropdown-item text-dark">My Address</a></li>
@@ -206,39 +208,71 @@ if (isset($_POST['add_to_cart'])) {
                             <h2 style="margin: 0; font-size: 22px; font-weight: 500;">Best Home Appliances</h2>
                             <!-- <button class="btn btn-primary rounded-circle" style="width: 32px; height: 32px; padding: 0; display: flex; align-items: center; justify-content: center;"><i class="fas fa-chevron-right"></i></button> -->
                         </div>
+                        <?php
+                    $homeProducts = $home;
+
+                    $existinghomeIds = [];
+                    foreach ($homeProducts as $homeProduct) {
+                        $existinghomeIds[(int) $homeProduct['id']] = true;
+                    }
+
+                    $query = "SELECT * FROM products
+                              WHERE LOWER(TRIM(category)) IN ('home', 'homes')";
+                    $result = mysqli_query($conn, $query);
+
+                    if ($result) {
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            $detail_id = !empty($row['source_product_id']) ? (int) $row['source_product_id'] : (int) $row['id'];
+
+                            if (isset($existinghomeIds[$detail_id])) {
+                                continue;
+                            }
+
+                            $homeProducts[] = [
+                                'id' => $detail_id,
+                                'db_id' => (int) $row['id'],
+                                'name' => $row['product_name'],
+                                'price' => '₹' . number_format((float) $row['price'], 0),
+                                'desc' => $row['description'],
+                                'img' => $row['image_url']
+                            ];
+                            $existinghomeIds[$detail_id] = true;
+                        }
+                    }
+                    ?>
                         <div class="row m-0 p-3" style="display: flex; flex-wrap: wrap;">
-                            <?php foreach ($home as $home): ?>
+                            <?php foreach ($homeProducts as $homeItem): ?>
                                 <div class="p-2" style="flex: 0 0 calc(100% / 5); max-width: calc(100% / 5);">
                                     <div class="card product-card"
                                         style="border: none; position: relative; height: 100%; transition: transform 0.2s; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
                                         <div
                                             style="height: 180px; display: flex; align-items: center; justify-content: center; padding: 15px;">
-                                            <img src="<?php echo $home['img']; ?>"
+                                            <img src="<?php echo $homeItem['img']; ?>"
                                                 style="max-height: 100%; max-width: 100%; object-fit: contain;"
-                                                alt="<?php echo htmlspecialchars($home['name']); ?>">
+                                                alt="<?php echo htmlspecialchars($homeItem['name']); ?>">
                                         </div>
                                         <div class="card-body text-center" style="padding: 10px;">
                                             <div class="card-head"
                                                 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 5px;">
-                                                <a href="../products.php?id=<?php echo $home['id']; ?>"
+                                                <a href="../products.php?id=<?php echo $homeItem['id']; ?>"
                                                     style="text-decoration: none; color: #212121; font-weight: 500; font-size: 14px;">
-                                                    <?php echo htmlspecialchars($home['name']); ?>
+                                                    <?php echo htmlspecialchars($homeItem['name']); ?>
                                                 </a>
                                             </div>
                                             <div class="card-text"
                                                 style="color: #388e3c; font-weight: 500; font-size: 14px; margin-bottom: 3px;">
-                                                <?php echo htmlspecialchars($home['price']); ?>
+                                                <?php echo htmlspecialchars($homeItem['price']); ?>
                                             </div>
                                             <div class="text-muted"
                                                 style="font-size: 12px; margin-bottom: 10px; color: #878787 !important;">
-                                                <?php echo htmlspecialchars($home['desc']); ?>
+                                                <?php echo htmlspecialchars($homeItem['desc']); ?>
                                             </div>
                                             <form method="POST" class="text-center mt-auto d-inline-block w-100">
-                                                <input type="hidden" name="product_id" value="<?php echo $home['id']; ?>">
+                                                <input type="hidden" name="product_id" value="<?php echo $homeItem['id']; ?>">
                                                 <input type="hidden" name="product_name"
-                                                    value="<?php echo htmlspecialchars($home['name']); ?>">
+                                                    value="<?php echo htmlspecialchars($homeItem['name']); ?>">
                                                 <input type="hidden" name="product_image"
-                                                    value="<?php echo $home['img']; ?>">
+                                                    value="<?php echo $homeItem['img']; ?>">
                                                 <button type="submit" name="add_to_cart"
                                                     class="btn btn-primary btn-sm w-100">
                                                     <i class="fa-solid fa-cart-arrow-down mr-1"></i> Add To Cart

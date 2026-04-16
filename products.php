@@ -224,7 +224,12 @@ $products = [
     129 => ['id' => 139, 'name' => 'Door Locks', 'price' => 499, 'original_price' => 699, 'image' => 'https://rukminim2.flixcart.com/fk-p-flap/1670/2520/image/fa72c688263c56c6.jpg?q=80', 'desc' => 'Heavy Door Lock', 'rating' => 4.2, 'reviews' => 276],
     130 => ['id' => 130, 'name' => 'Power Tool', 'price' => 1299, 'original_price' => 1599, 'image' => 'https://rukminim2.flixcart.com/fk-p-flap/1670/2520/image/15a3847c157990f3.jpg?q=80', 'desc' => 'Power Tool Box', 'rating' => 4.4, 'reviews' => 189],
     131 => ['id' => 131, 'name' => 'Extension Board', 'price' => 329, 'original_price' => 499, 'image' => 'https://rukminim2.flixcart.com/fk-p-flap/1670/2520/image/15994633b50b2fa5.jpg?q=80', 'desc' => 'Extension Board 500W', 'rating' => 4.1, 'reviews' => 354],
-  
+   
+    133 => ['id' => 133, 'name' => 'Voltas AC', 'price' => 29999, 'original_price' => 33499, 'image' => 'https://rukminim2.flixcart.com/image/312/312/xif0q/air-conditioner-new/j/v/j/-original-imahjzbkhfwe7sht.jpeg?q=70', 'desc' => 'Voltas 2025 Model 1.5 Ton 3 Star Split Inverter 4-IN-1 Adjustable Mode | Energy Efficient | High Ambient Cooling', 'rating' => 4.1, 'reviews' => 354],
+    134 => ['id' => 134, 'name' => 'Samsung 653 L ', 'price' => 79999, 'original_price' => 100499, 'image' => 'https://rukminim2.flixcart.com/image/312/312/xif0q/refrigerator-new/b/a/m/-original-imahfpfxg7zayvgr.jpeg?q=70', 'desc' => 'Samsung 653 L Frost Free Side by Side 3 Star Refrigerator  with AI and WiFi', 'rating' => 4.1, 'reviews' => 354],
+    135 => ['id' => 135, 'name' => 'Canoly Cold Press Juiser', 'price' => 9999, 'original_price' => 12499, 'image' => 'https://rukminim1.flixcart.com/image/1860/1860/xif0q/mixer-grinder-juicer/1/u/c/cnly-cpj-je37b-new-canoly-original-imahg68jbag9hvz6.jpeg?q=90', 'desc' => 'Canoly Cold Press Slow Juicer, Slow Masticating Juicer Machine, Easy to Clean 350 W Juicer', 'rating' => 4.1, 'reviews' => 354],
+
+
     202 => ['id' => 202, 'name' => 'Extension Board', 'price' => 1500, 'original_price' => 2499, 'image' => 'https://rukminim1.flixcart.com/fk-p-flap/380/510/image/974ea1811b2ec366.png?q=80', 'desc' => '21 days battery', 'rating' => 4.1, 'reviews' => 354],
 
 ];
