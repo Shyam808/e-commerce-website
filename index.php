@@ -71,32 +71,7 @@ if (isset($_SESSION['email'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/css/adminlte.min.css">
     <link rel="stylesheet" href="custom_style.css">
     <link rel="stylesheet" href="flipkart_style.css">
-    <!-- <style>
-        .col-5-card {
-            flex: 0 0 20%;
-            max-width: 20%;
-        }
-
-        .col-4-card {
-            flex: 0 0 25%;
-            max-width: 25%;
-        }
-
-        .row-horizontal {
-            flex-wrap: nowrap;
-            overflow-x: auto;
-            padding-bottom: 10px;
-        }
-
-        .row-horizontal::-webkit-scrollbar {
-            height: 8px;
-        }
-
-        .row-horizontal::-webkit-scrollbar-thumb {
-            background: #c1c1c1;
-            border-radius: 4px;
-        }
-    </style> -->
+    
 </head>
 
 <body class="hold-transition layout-top-nav">
@@ -478,30 +453,6 @@ if (isset($_SESSION['email'])) {
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-5-card p-2">
-                                <div class="card product-card">
-                                    <img src="https://rukminim2.flixcart.com/image/312/312/xif0q/mobile/s/n/p/-original-imahfrff5gqmz6ed.jpeg?q=70"
-                                        class="card-img-top" alt="iPhone 15">
-                                    <div class="card-body">
-                                        <div class="card-head"><a href="products.php?id=666"
-                                                style="text-decoration: none; color: #000;">Samsung Galaxy S25 FE 5G</a>
-                                        </div>
-                                        <div class="card-text">From ₹54999</div>
-                                        <div class="text-primary text-muted" style="font-size: 13px;">Exynos 2400e
-                                            Processor</div>
-                                        <form method="POST" class="text-center mt-2 d-inline-block">
-                                            <input type="hidden" name="product_id" value="666">
-                                            <input type="hidden" name="product_name" value="Samsung Galaxy S25 FE 5G">
-                                            <input type="hidden" name="product_image"
-                                                value="https://rukminim2.flixcart.com/image/312/312/xif0q/mobile/s/n/p/-original-imahfrff5gqmz6ed.jpeg?q=70">
-                                            <button type="submit" name="add_to_cart" class="btn btn-primary btn-sm">
-                                                <i class="fa-solid fa-cart-arrow-down mr-1"></i> Add to cart
-                                            </button>
-                                        </form>
-
-                                    </div>
-                                </div>
-                            </div>
 
                         </div>
                     </div>
@@ -596,28 +547,6 @@ if (isset($_SESSION['email'])) {
                                     <div class="card-body">
                                         <div class="card-head"><a href="products.php?id=9"
                                             style="text-decoration: none; color: #000; cursor: pointer;">Xiaomi 43inch Smart TV</a></div>
-                                        <div class="card-text">From ₹24,999</div>
-                                        <div class="text-primary text-muted" style="font-size: 13px;">Ultra HD (4K) Smart WebOS TV</div>
-                                        <form method="POST" class="text-center mt-2 d-inline-block">
-                                            <input type="hidden" name="product_id" value="9">
-                                            <input type="hidden" name="product_name" value="Xiaomi 43 inch Smart TV">
-                                            <input type="hidden" name="product_image"
-                                                value="https://rukminim2.flixcart.com/image/312/312/xif0q/television/j/3/5/-original-imahjf6ypgx2f9sy.jpeg?q=70">
-                                            <button type="submit" name="add_to_cart" class="btn btn-primary btn-sm">
-                                                <i class="fa-solid fa-cart-arrow-down mr-1"></i> Add to cart
-                                            </button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-4-card p-2">
-                                <div class="card product-card">
-                                    <img src="https://rukminim2.flixcart.com/image/312/312/xif0q/television/j/3/5/-original-imahjf6ypgx2f9sy.jpeg?q=70"
-                                        class="card-img-top" alt="LG OLED">
-                                    <div class="card-body">
-                                        <div class="card-head"><a href="products.php?id=9"
-                                                style="text-decoration: none; color: #000; cursor: pointer;">Xiaomi 43 inch Smart TV</a></div>
                                         <div class="card-text">From ₹24,999</div>
                                         <div class="text-primary text-muted" style="font-size: 13px;">Ultra HD (4K) Smart WebOS TV</div>
                                         <form method="POST" class="text-center mt-2 d-inline-block">
