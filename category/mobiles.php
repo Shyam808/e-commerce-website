@@ -169,8 +169,7 @@ $mobileProducts = [];
                     </div>
                     <div class="category-item">
                         <i class="fa-solid fa-person-biking"></i>
-                        <span style="font-size: 13px;"><a href="two_wheeler.php" style="color:#000">2 -
-                                Wheeler</a></span>
+                        <span style="font-size: 13px;"><a href="bikes.php" style="color:#000">2 - Wheeler</a></span>
                     </div>
                     <div class="category-item">
                         <i class="fa-solid fa-baseball-bat-ball"></i>

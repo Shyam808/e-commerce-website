@@ -26,7 +26,8 @@ if (isset($_POST['add_to_cart'])) {
     }
 }
 
-$bookProducts = [];
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,7 +35,7 @@ $bookProducts = [];
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Books</title>
+    <title>Food & Health</title>
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -88,9 +89,9 @@ $bookProducts = [];
                                     class="far fa-user-circle mr-2"
                                     style="font-size: 20px;"></i><?php echo htmlspecialchars($_SESSION['email']); ?></a>
                             <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-                                <li><a href="../my_orders.php" class="dropdown-item text-dark">My Orders</a></li>
                                 <li><a href="../payment.php" class="dropdown-item text-dark">Payments</a></li>
                                 <li><a href="../my_wishlist.php" class="dropdown-item text-dark">My Wishlist</a></li>
+                                <li><a href="../my_orders.php" class="dropdown-item text-dark">My Orders</a></li>
                                 <li><a href="../cart.php" class="dropdown-item text-dark">My Cart</a></li>
                                 <li><a href="../my_address.php" class="dropdown-item text-dark">My Address</a></li>
                                 <li><a href="../profile.php" class="dropdown-item text-dark">My Profile</a></li>
@@ -126,15 +127,11 @@ $bookProducts = [];
                     </div>
                     <div class="category-item">
                         <i class="fa-solid fa-mobile-screen-button"></i>
-                        <span style="font-size: 13px;"><a href="mobiles.php" style="color:#000;">Mobile</a></span>
+                        <span style="font-size: 13px;"><a href="mobiles.php" style="color:#000;">Mobiles</a></span>
                     </div>
                     <div class="category-item">
-                        <i class="fa-solid fa-book" style="color: #2874f0;"></i>
-                        <span style="font-size: 13px;"><a href="books.php"
-                                style="color:#2874f0 !important; font-weight: bold;">Books</a></span>
-                        <div
-                            style="height: 2px; background-color: #2874f0; width: 100%; margin-top: 5px; border-radius: 2px;">
-                        </div>
+                        <i class="fa-solid fa-book"></i>
+                        <span style="font-size: 13px;"><a href="books.php" style="color:#000">Books</a></span>
                     </div>
                     <div class="category-item">
                         <i class="fa-solid fa-laptop"></i>
@@ -148,7 +145,7 @@ $bookProducts = [];
                     </div>
                     <div class="category-item">
                         <i class="fa-regular fa-lightbulb"></i>
-                        <span style="font-size: 13px;"><a href="home.php"style="color:#000">Home</a></span>
+                        <span style="font-size: 13px;"><a href="home.php" style="color:#000">Home</a></span>
                     </div>
                     <div class="category-item">
                         <i class="fa-solid fa-tv"></i>
@@ -159,8 +156,12 @@ $bookProducts = [];
                         <span style="font-size: 13px;"><a href="toys.php" style="color:#000">Toys, Games</a></span>
                     </div>
                     <div class="category-item">
-                        <i class="fa-solid fa-burger"></i>
-                        <span style="font-size: 13px;"><a href="food.php" style="color:#000">Food & Health</a></span>
+                        <i class="fa-solid fa-burger" style="color: #2874f0;"></i>
+                        <span style="font-size: 13px;"><a href="food.php" 
+                                style="color:#2874f0 !important; font-weight: bold;">Food & Health</a></span>
+                        <div
+                            style="height: 2px; background-color: #2874f0; width: 100%; margin-top: 5px; border-radius: 2px;">
+                        </div>
                     </div>
                     <div class="category-item">
                         <i class="fa-solid fa-helmet-un"></i>
@@ -168,177 +169,103 @@ $bookProducts = [];
                     </div>
                     <div class="category-item">
                         <i class="fa-solid fa-person-biking"></i>
-                        <span style="font-size: 13px;"><a href="bikes.php" style="color:#000; ">2 - Wheeler</a></span>
+                        <span style="font-size: 13px;"><a href="bikes.php" style="color:#000">2 - Wheeler</a></span>
                     </div>
                     <div class="category-item">
                         <i class="fa-solid fa-baseball-bat-ball"></i>
-                        <span style="font-size: 13px;"><a href="sports.php" style="color:#000; ">Sports</a></span>
+                        <span style="font-size: 13px;"><a href="sports.php" style="color:#000">Sports</a></span>
                     </div>
                     <div class="category-item">
                         <i class="fa-solid fa-gem"></i>
-                        <span style="font-size: 13px;"><a href="beauty.php" style="color:#000; ">Beauty</a></span>
+                        <span style="font-size: 13px;"><a href="beauty.php" style="color:#000">Beauty</a></span>
                     </div>
                     <div class="category-item">
                         <i class="fa-solid fa-chair"></i>
-                        <span style="font-size: 13px;"><a href="furniture.php" style="color:#000; ">Furniture</a></span>
+                        <span style="font-size: 13px;"><a href="furniture.php" style="color:#000">Furniture</a></span>
                     </div>
                 </div>
             </div>
             <div class="content">
                 <div class="container" style="max-width: 1800px;">
-                    <div id="autoScrollContainer" class="featured-banners"
-                        style="display:flex; justify-content: space-between;height: 300px;">
-                        <div class="featured-banner" style="width: 585px; height: 300px; "><a
-                                href="../products.php?id=82">
-                                <img src="https://rukminim2.flixcart.com/fk-p-flap/1620/790/image/750e4f449589c018.jpg?q=80"
-                                    alt="Banner 2" style="border-radius: 4px; cursor: pointer; height: 300px;">
-                            </a>
-                        </div>
-                        <div class="featured-banner" style="width: 585px; height: 300px;"><a
-                                href="../products.php?id=83">
-                                <img src="https://rukminim2.flixcart.com/fk-p-flap/1620/790/image/7d976bb94f429c59.jpg?q=80"
-                                    alt="Banner 2" style="border-radius: 4px; cursor: pointer; height: 300px;">
-                            </a>
-                        </div>
-                        <div class="" style="width: 585px; height: 300px; object-fit: fixed;"><a
-                                href="../products.php?id=66">
-                                <img src="https://rukminim2.flixcart.com/image/1860/1860/xif0q/shopsy-regionalbooks/e/g/k/2019-2019-bhaktivedant-book-trust-hardcover-hindi-bhagwat-gita-original-imahhhhjhwgmzagz.jpeg?q=90"
-                                    alt="Banner 2" style="border-radius: 4px; cursor: pointer; height: 300px;">
-                            </a>
-                        </div>
-                        <div class="" style="width: 585px; height: 300px;"><a href="../products.php?id=65">
-                                <img src="https://rukminim2.flixcart.com/image/1860/1860/xif0q/book/j/h/d/-original-imahgwhequjjwy2g.jpeg?q=90"
-                                    alt="Banner 2" style="border-radius: 4px; cursor: pointer; height: 300px;">
-                            </a>
-                        </div>
-                        <div class="" style="width: 585px; height: 300px;"><a href="../products.php?id=80">
-                                <img src="https://rukminim2.flixcart.com/image/612/612/xif0q/regionalbooks/b/h/a/bhagavad-gita-yatharoop-gujarati-hardcover-free-japa-mala-and-original-imahew4h38abzus7.jpeg?q=70"
-                                    alt="Banner 2" style="border-radius: 4px; cursor: pointer; height: 300px;">
-                            </a>
-                        </div>
-                        <div class="featured-banner" style="width: 585px; height: 300px;"><a
-                                href="../products.php?id=84">
-                                <img src="https://rukminim2.flixcart.com/fk-p-flap/1620/790/image/4f0c22503194c20c.jpg?q=80"
-                                    alt="Banner 2" style="border-radius: 4px; cursor: pointer; height: 300px;">
-                            </a>
-                        </div>
-                    </div>
 
                     <?php
-                    $books = [];
-                    foreach ($products as $catalogProduct) {
-                        $catalogId = isset($catalogProduct['id']) ? (int) $catalogProduct['id'] : 0;
-                        if ($catalogId >= 65 && $catalogId <= 81) {
-                            $books[] = [
-                                'id' => $catalogId,
-                                'name' => $catalogProduct['name'],
-                                'price' => '₹' . number_format((float) (isset($catalogProduct['price']) ? $catalogProduct['price'] : 0), 0),
-                                'desc' => isset($catalogProduct['desc']) ? $catalogProduct['desc'] : '',
-                                'img' => isset($catalogProduct['image']) ? $catalogProduct['image'] : ''
-                            ];
-                        }
-                    }
-                    ?>
-                    <!-- <div class="parent-nano"
-                        style="width: 1500px; border-radius: 20px; background: #fff; gap: 15px; padding-bottom: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-top: 20px;">
-                        <div class="nano-books">
-                            <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?w=200" alt="Books">
-                            <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=200" alt="Books">
-                            <img src="https://images.unsplash.com/photo-1519682337058-a94d519337bc?w=200" alt="Books">
-                            <img src="https://images.unsplash.com/photo-1532012197267-da84d127e765?w=200" alt="Books">
-                            <img src="https://images.unsplash.com/photo-1495446815901-a7297e633e8d?w=200" alt="Books">
-                            <img src="https://images.unsplash.com/photo-1528207776546-365bb710ee93?w=200" alt="Books">
-                            <img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=200" alt="Books">
-                            <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=200" alt="Books">
-                            <img src="https://images.unsplash.com/photo-1516979187457-637abb4f9353?w=200" alt="Books">
-                            <img src="https://images.unsplash.com/photo-1455885661740-29cbf08a42fa?w=200" alt="Books">
-                            <img src="https://images.unsplash.com/photo-1524578271613-d550eacf6090?w=200" alt="Books">
-                            <img src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=200" alt="Books">
-                            <img src="https://images.unsplash.com/photo-1476275466078-4007374efbbe?w=200" alt="Books">
-                            <img src="https://images.unsplash.com/photo-1513001900722-370f803f498d?w=200" alt="Books">
-                        </div>
-                    </div> -->
-                    <div class="product-wrapper"
-                        style="border-radius: 20px; background: #fff; padding-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-top: 5px;">
-                        <?php
-                    $bookProducts = $books;
-
-                    $existingbookIds = [];
-                    foreach ($bookProducts as $bookProduct) {
-                        $existingbookIds[(int) $bookProduct['id']] = true;
-                    }
-
+                    $foods = [];
                     $query = "SELECT * FROM products
-                              WHERE LOWER(TRIM(category)) IN ('book', 'books')";
+                              WHERE LOWER(TRIM(category)) IN ('food', 'food & health', 'food, health')";
                     $result = mysqli_query($conn, $query);
 
                     if ($result) {
                         while ($row = mysqli_fetch_assoc($result)) {
                             $detail_id = !empty($row['source_product_id']) ? (int) $row['source_product_id'] : (int) $row['id'];
-
-                            if (isset($existingbookIds[$detail_id])) {
-                                continue;
-                            }
-
-                            $bookProducts[] = [
+                            $foods[] = [
                                 'id' => $detail_id,
                                 'db_id' => (int) $row['id'],
                                 'name' => $row['product_name'],
-                                'price' => '₹' . number_format((float) $row['price'], 0),
+                                'price' => '₹' . number_format((float) $row['price']),
                                 'desc' => $row['description'],
                                 'img' => $row['image_url']
                             ];
-                            $existingbookIds[$detail_id] = true;
                         }
                     }
                     ?>
+
+                    <div class="product-wrapper"
+                        style="border-radius: 20px; background: #fff; padding-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-top: 5px;">
                         <div class="section-header"
                             style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f0f0f0; padding: 15px;">
-                            <h2 style="margin: 0; font-size: 22px; font-weight: 500;">Books</h2>
-                            <!-- <button class="btn btn-primary rounded-circle" style="width: 32px; height: 32px; padding: 0; display: flex; align-items: center; justify-content: center;"><i class="fas fa-chevron-right"></i></button> -->
+                            <h2 style="margin: 0; font-size: 22px; font-weight: 500;">Best Food & Health</h2>
+                            <!-- <button class="    btn btn-primary rounded-circle" style="width: 32px; height: 32px; padding: 0; display: flex; align-items: center; justify-content: center;"><i class="fas fa-chevron-right"></i></button> -->
                         </div>
                         <div class="row m-0 p-3" style="display: flex; flex-wrap: wrap;">
-                            <?php foreach ($bookProducts as $book): ?>
-                                <div class="p-2" style="flex: 0 0 calc(100% / 5); max-width: calc(100% / 5);">
-                                    <div class="card product-card"
-                                        style="border: none; position: relative; height: 100%; transition: transform 0.2s; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
-                                        <div
-                                            style="height: 180px; display: flex; align-items: center; justify-content: center; padding: 15px;">
-                                            <img src="<?php echo $book['img']; ?>"
-                                                style="max-height: 100%; max-width: 100%; object-fit: contain;"
-                                                alt="<?php echo htmlspecialchars($book['name']); ?>">
-                                        </div>
-                                        <div class="card-body text-center" style="padding: 10px;">
-                                            <div class="card-head"
-                                                style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 5px;">
-                                                <a href="../products.php?id=<?php echo $book['id']; ?>"
-                                                    style="text-decoration: none; color: #212121; font-weight: 500; font-size: 14px;">
-                                                    <?php echo htmlspecialchars($book['name']); ?>
-                                                </a>
+                            <?php if (!empty($foods)): ?>
+                                <?php foreach ($foods as $food): ?>
+                                    <div class="p-2" style="flex: 0 0 calc(100% / 5); max-width: calc(100% / 5);">
+                                        <div class="card product-card"
+                                            style="border: none; position: relative; height: 100%; transition: transform 0.2s; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+                                            <div
+                                                style="height: 180px; display: flex; align-items: center; justify-content: center; padding: 15px;">
+                                                <img src="<?php echo $food['img']; ?>"
+                                                    style="max-height: 100%; max-width: 100%; object-fit: contain;"
+                                                    alt="<?php echo htmlspecialchars($food['name']); ?>">
                                             </div>
-                                            <div class="card-text"
-                                                style="color: #388e3c; font-weight: 500; font-size: 14px; margin-bottom: 3px;">
-                                                <?php echo htmlspecialchars($book['price']); ?>
+                                            <div class="card-body text-center" style="padding: 10px;">
+                                                <div class="card-head"
+                                                    style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 5px;">
+                                                    <a href="../products.php?id=<?php echo $food['id']; ?>"
+                                                        style="text-decoration: none; color: #212121; font-weight: 500; font-size: 14px;">
+                                                        <?php echo htmlspecialchars($food['name']); ?>
+                                                    </a>
+                                                </div>
+                                                <div class="card-text"
+                                                    style="color: #388e3c; font-weight: 500; font-size: 14px; margin-bottom: 3px;">
+                                                    <?php echo htmlspecialchars($food['price']); ?>
+                                                </div>
+                                                <div class="text-muted"
+                                                    style="font-size: 12px; margin-bottom: 10px; color: #878787 !important;">
+                                                    <?php echo htmlspecialchars($food['desc']); ?>
+                                                </div>
+                                                <form method="POST" class="text-center mt-auto d-inline-block w-100">
+                                                    <input type="hidden" name="product_id" value="<?php echo $food['id']; ?>">
+                                                    <input type="hidden" name="product_name"
+                                                        value="<?php echo htmlspecialchars($food['name']); ?>">
+                                                    <input type="hidden" name="product_image"
+                                                        value="<?php echo $food['img']; ?>">
+                                                    <button type="submit" name="add_to_cart"
+                                                        class="btn btn-primary btn-sm w-100">
+                                                        <i class="fa-solid fa-cart-arrow-down mr-1"></i> Add To Cart
+                                                    </button>
+                                                </form>
                                             </div>
-                                            <div class="text-muted"
-                                                style="font-size: 12px; margin-bottom: 10px; color: #878787 !important;">
-                                                <?php echo htmlspecialchars($book['desc']); ?>
-                                            </div>
-                                            <form method="POST" class="text-center mt-auto d-inline-block w-100">
-                                                <input type="hidden" name="product_id" value="<?php echo $book['id']; ?>">
-                                                <input type="hidden" name="product_name"
-                                                    value="<?php echo htmlspecialchars($book['name']); ?>">
-                                                <input type="hidden" name="product_image"
-                                                    value="<?php echo $book['img']; ?>">
-                                                <button type="submit" name="add_to_cart"
-                                                    class="btn btn-primary btn-sm w-100">
-                                                    <i class="fa-solid fa-cart-arrow-down mr-1"></i> Add To Cart
-                                                </button>
-                                            </form>
                                         </div>
                                     </div>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <div class="col-12">
+                                    <p style="margin: 0; padding: 24px; text-align: center; color: #666;">
+                                        No Food or Health products found right now.
+                                    </p>
                                 </div>
-                            <?php endforeach; ?>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>

@@ -130,8 +130,7 @@ $applianceProducts = [];
                     style="justify-content: flex-start; gap: 10px; justify-content: space-around; ">
                     <div class="category-item">
                         <i class="fa-solid fa-bag-shopping"></i>
-                        <span style="font-size: 13px; font-weight: 600;"><a href="../index.php" style="color:#000;">For
-                                You</a></span>
+                        <span style="font-size: 13px; font-weight: 600;"><a href="../index.php" style="color:#000;">For You</a></span>
                         <div class="uline" style="display: none;"></div>
                     </div>
                     <div class="category-item active">
@@ -148,13 +147,11 @@ $applianceProducts = [];
                     </div>
                     <div class="category-item">
                         <i class="fa-solid fa-laptop"></i>
-                        <span style="font-size: 13px;"><a href="electronic.php"
-                                style="color:#000;">Electronics</a>a</span>
+                        <span style="font-size: 13px;"><a href="electronic.php" style="color:#000;">Electronics</a>a</span>
                     </div>
                     <div class="category-item">
                         <i class="fa-solid fa-headset"></i>
-                        <span style="font-size: 13px;"><a href="headphone.php" style="color:#000">Head
-                                Phone</a></span></span>
+                        <span style="font-size: 13px;"><a href="headphone.php" style="color:#000">HeadPhone</a></span></span>
                     </div>
                     <div class="category-item">
                         <i class="fa-regular fa-lightbulb"></i>
@@ -174,27 +171,27 @@ $applianceProducts = [];
                     </div>
                     <div class="category-item">
                         <i class="fa-solid fa-burger"></i>
-                        <span style="font-size: 13px;">Food & Health</span>
+                        <span style="font-size: 13px;"><a href="food.php" style="color:#000">Food & Health</a></span>
                     </div>
                     <div class="category-item">
                         <i class="fa-solid fa-helmet-un"></i>
-                        <span style="font-size: 13px;">Auto Accessories</span>
+                        <span style="font-size: 13px;"><a href="auto.php" style="color:#000">Auto Accessories</a></span>
                     </div>
                     <div class="category-item">
                         <i class="fa-solid fa-person-biking"></i>
-                        <span style="font-size: 13px;">2 - Wheeler</span>
+                        <span style="font-size: 13px;"><a href="bikes.php" style="color:#000">2 - Wheeler</a></span>
                     </div>
                     <div class="category-item">
                         <i class="fa-solid fa-baseball-bat-ball"></i>
-                        <span style="font-size: 13px;">Sports</span>
+                        <span style="font-size: 13px;"><a href="sports.php" style="color:#000">Sports</a></span>
                     </div>
                     <div class="category-item">
                         <i class="fa-solid fa-gem"></i>
-                        <span style="font-size: 13px;">Beauty</span>
+                        <span style="font-size: 13px;"><a href="beauty.php" style="color:#000">Beauty</a></span>
                     </div>
                     <div class="category-item">
                         <i class="fa-solid fa-chair"></i>
-                        <span style="font-size: 13px;">Furniture</span>
+                        <span style="font-size: 13px;"><a href="furniture.php" style="color:#000">Furniture</a></span>
                     </div>
                 </div>
             </div>

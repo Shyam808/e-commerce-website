@@ -26,7 +26,9 @@ if (isset($_POST['add_to_cart'])) {
     }
 }
 
-$headphoneProducts = [];
+
+
+//$autoProducts = [];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,7 +36,7 @@ $headphoneProducts = [];
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>HeadPhones</title>
+    <title>Furniture</title>
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -130,28 +132,22 @@ $headphoneProducts = [];
                     </div>
                     <div class="category-item">
                         <i class="fa-solid fa-book"></i>
-                        <span style="font-size: 13px;"><a href="books.php"
-                                style="color:#000">Books</a></span>
+                        <span style="font-size: 13px;"><a href="books.php" style="color:#000">Books</a></span>
                     </div>
                     <div class="category-item">
                         <i class="fa-solid fa-laptop"></i>
-                        <span style="font-size: 13px;"><a href="electronic.php"
-                                style="color:#000;">Electronics</a>a</span>
+                        <span style="font-size: 13px;"><a href="electronic.php" style="color:#000;">Electronics</a>a</span>
                     </div>
                     <div class="category-item">
-                        <i class="fa-solid fa-headset" style="color: #2874f0;"></i>
-                        <span style="font-size: 13px;"><a href="headphone.php"
-                                style="color:#2874f0 !important; font-weight: bold;">Head Phone</a></span>
-                            <div
-                            style="height: 2px; background-color: #2874f0; width: 100%; margin-top: 5px; border-radius: 2px;">
-                        </div>
+                        <i class="fa-solid fa-headset"></i>
+                        <span style="font-size: 13px;"><a href="headphone.php" style="color:#000">HeadPhone</a></span></span>
                     </div>
                     <div class="category-item">
                         <i class="fa-regular fa-lightbulb"></i>
-                        <span style="font-size: 13px;"><a href="home.php"style="color:#000">Home</a></span>
+                        <span style="font-size: 13px;"><a href="home.php" style="color:#000">Home</a></span>
                     </div>
                     <div class="category-item">
-                        <i class="fa-solid fa-tv"></i>
+                        <i class="fa-solid fa-tv" ></i>
                         <span style="font-size: 13px;"><a href="appliances.php" style="color:#000">Appliances</a></span>
                     </div>
                     <div class="category-item">
@@ -164,179 +160,110 @@ $headphoneProducts = [];
                     </div>
                     <div class="category-item">
                         <i class="fa-solid fa-helmet-un"></i>
-                        <span style="font-size: 13px;"><a href="auto.php" style="color:#000">Auto Accessories</a></span>
+                         <span style="font-size: 13px;"><a href="auto.php" style="color:#000">Auto Accessories</a></span>
                     </div>
                     <div class="category-item">
-                        <i class="fa-solid fa-person-biking"></i>
+                        <i class="fa-solid fa-person-biking" ></i>
                         <span style="font-size: 13px;"><a href="bikes.php" style="color:#000">2 - Wheeler</a></span>
                     </div>
                     <div class="category-item">
-                        <i class="fa-solid fa-baseball-bat-ball"></i>
-                        <span style="font-size: 13px;"><a href="sports.php" style="color:#000">Sports</a></span>
+                        <i class="fa-solid fa-baseball-bat-ball" ></i>
+                        <span style="font-size: 13px;" ><a href="sports.php" style="color:#000">Sports</a></span>
                     </div>
                     <div class="category-item">
                         <i class="fa-solid fa-gem"></i>
                         <span style="font-size: 13px;"><a href="beauty.php" style="color:#000">Beauty</a></span>
                     </div>
                     <div class="category-item">
-                        <i class="fa-solid fa-chair"></i>
-                        <span style="font-size: 13px;"><a href="furniture.php" style="color:#000">Furniture</a></span>
+                        <i class="fa-solid fa-chair" style="color: #2874f0;"></i>
+                        <span style="color:#2874f0 !important; font-weight: bold;"><a href="furniture.php">Furniture</a></span>
+                        <div
+                            style="height: 2px; background-color: #2874f0; width: 100%; margin-top: 5px; border-radius: 2px;">
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="content">
                 <div class="container" style="max-width: 1800px;">
-                    <div id="autoScrollContainer" class="featured-banners"
-                        style="display:flex; justify-content: space-between;height: 300px;">
-                        <div class="featured-banner" style="width: 585px; height: 300px; "><a
-                                href="#">
-                                <img src="https://rukminim2.flixcart.com/fk-p-flap/1580/770/image/9231385aa2753ef7.png?q=80"
-                                    alt="Banner 2" style="border-radius: 4px; cursor: pointer; height: 300px;">
-                            </a>
-                        </div>
-                        <div class="featured-banner" style="width: 585px; height: 300px;"><a
-                                href="#">
-                                <img src="https://rukminim2.flixcart.com/fk-p-flap/1580/770/image/609ea1b8ff0747f0.png?q=80"
-                                    alt="Banner 2" style="border-radius: 4px; cursor: pointer; height: 300px;">
-                            </a>
-                        </div>
-                        <div class="" style="width: 585px; height: 300px; object-fit: fixed;"><a
-                                href="#">
-                                <img src="https://rukminim2.flixcart.com/fk-p-flap/1620/790/image/ae078eed92386431.jpg?q=80"
-                                    alt="Banner 2" style="border-radius: 4px; cursor: pointer; height: 300px;">
-                            </a>
-                        </div>
-                    </div>
 
-                    <?php
-                    $headphones = [];
-                    foreach ($products as $catalogProduct) {
-                        $catalogId = isset($catalogProduct['id']) ? (int) $catalogProduct['id'] : 0;
-                        if (($catalogId >= 85 && $catalogId <= 100) || ($catalogId >= 121 && $catalogId <= 124)) {
-                            $headphones[] = [
-                                'id' => $catalogId,
-                                'name' => $catalogProduct['name'],
-                                'price' => '₹' . number_format((float) (isset($catalogProduct['price']) ? $catalogProduct['price'] : 0), 0),
-                                'desc' => isset($catalogProduct['desc']) ? $catalogProduct['desc'] : '',
-                                'img' => isset($catalogProduct['image']) ? $catalogProduct['image'] : ''
-                            ];
-                        }
-                    }
-                    ?>
-                    <div class="parent-nano"
-                        style="width: 1500px; border-radius: 20px; background: #fff; gap: 15px; padding-bottom: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-top: 20px;">
-                        <div class="nano-mobiles">
-                            <img src="https://rukminim1.flixcart.com/fk-p-flap/98/98/image/724653fb19a4dd61.jpg?q=80"
-                                alt="">
-                            <img src="https://rukminim1.flixcart.com/fk-p-flap/98/98/image/2d92dd6aaa9a2334.jpg?q=80"
-                                alt="">
-                            <img src="https://rukminim1.flixcart.com/fk-p-flap/98/98/image/fca2cb9d5185cbed.jpg?q=80"
-                                alt="">
-                            <img src="https://rukminim1.flixcart.com/fk-p-flap/98/98/image/dde189ac7fd1835d.png?q=80"
-                                alt="">
-                            <img src="https://rukminim1.flixcart.com/fk-p-flap/98/98/image/cccf3e944fd1a0b4.jpg?q=80"
-                                alt="">
-                            <img src="https://rukminim1.flixcart.com/fk-p-flap/98/98/image/e811fca07e4fc9e2.jpg?q=80"
-                                alt="">
-                            <img src="https://rukminim1.flixcart.com/fk-p-flap/98/98/image/dcd5633aa033bd01.jpg?q=80"
-                                alt="">
-                            <img src="https://rukminim1.flixcart.com/fk-p-flap/98/98/image/b7be9cb9e0fa7304.jpg?q=80"
-                                alt="">
-                            <img src="https://rukminim1.flixcart.com/fk-p-flap/98/98/image/49b4b7c8e762b980.jpg?q=80"
-                                alt="">
-                            <img src="https://rukminim1.flixcart.com/fk-p-flap/98/98/image/46a8cf1df7166e13.jpg?q=80"
-                                alt="">
-                            <img src="https://rukminim1.flixcart.com/fk-p-flap/98/98/image/aded8350f9172a7d.jpg?q=80"
-                                alt="">
-                            <img src="https://rukminim1.flixcart.com/fk-p-flap/98/98/image/0a24ae14127249f8.jpg?q=80"
-                                alt="">
-                            <img src="https://rukminim1.flixcart.com/fk-p-flap/98/98/image/f5b98f986fd27c04.jpg?q=80"
-                                alt="">
-                            <img src="https://rukminim1.flixcart.com/fk-p-flap/98/98/image/1d86f08d701c391a.jpg?q=80"
-                                alt="">
-                        </div>
-                    </div>
-                    <div class="product-wrapper"
-                        style="border-radius: 20px; background: #fff; padding-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-top: 5px;">
-                        <div class="section-header"
-                            style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f0f0f0; padding: 15px;">
-                            <h2 style="margin: 0; font-size: 22px; font-weight: 500;">Headphones, Neckbands & Earbuds</h2>
-                            <!-- <button class="btn btn-primary rounded-circle" style="width: 32px; height: 32px; padding: 0; display: flex; align-items: center; justify-content: center;"><i class="fas fa-chevron-right"></i></button> -->
-                        </div>
-                        <?php
-                    $headphoneProducts = $headphones;
-
-                    $existingHeadphoneIds = [];
-                    foreach ($headphoneProducts as $headphoneProduct) {
-                        $existingHeadphoneIds[(int) $headphoneProduct['id']] = true;
-                    }
-
+                <?php
+                    $furnitures = [];
                     $query = "SELECT * FROM products
-                              WHERE LOWER(TRIM(category)) IN ('headphone', 'headphones')";
+                              WHERE LOWER(TRIM(category)) IN ('furniture', 'furnitures')";
                     $result = mysqli_query($conn, $query);
 
                     if ($result) {
                         while ($row = mysqli_fetch_assoc($result)) {
                             $detail_id = !empty($row['source_product_id']) ? (int) $row['source_product_id'] : (int) $row['id'];
-
-                            if (isset($existingHeadphoneIds[$detail_id])) {
-                                continue;
-                            }
-
-                            $headphoneProducts[] = [
+                            $furnitures[] = [
                                 'id' => $detail_id,
                                 'db_id' => (int) $row['id'],
                                 'name' => $row['product_name'],
-                                'price' => '₹' . number_format((float) $row['price'], 0),
+                                'price' => '₹' . number_format((float) $row['price']),
                                 'desc' => $row['description'],
                                 'img' => $row['image_url']
                             ];
-                            $existingHeadphoneIds[$detail_id] = true;
                         }
                     }
                     ?>
+
+                     <div class="product-wrapper"
+                        style="border-radius: 20px; background: #fff; padding-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-top: 5px;">
+                        <div class="section-header"
+                            style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f0f0f0; padding: 15px;">
+                            <h2 style="margin: 0; font-size: 22px; font-weight: 500;">Best Furniture Products</h2>
+                            <!-- <button class="    btn btn-primary rounded-circle" style="width: 32px; height: 32px; padding: 0; display: flex; align-items: center; justify-content: center;"><i class="fas fa-chevron-right"></i></button> -->
+                        </div>
                         <div class="row m-0 p-3" style="display: flex; flex-wrap: wrap;">
-                            <?php foreach ($headphoneProducts as $headphone): ?>
-                                <div class="p-2" style="flex: 0 0 calc(100% / 5); max-width: calc(100% / 5);">
-                                    <div class="card product-card"
-                                        style="border: none; position: relative; height: 100%; transition: transform 0.2s; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
-                                        <div
-                                            style="height: 180px; display: flex; align-items: center; justify-content: center; padding: 15px;">
-                                            <img src="<?php echo $headphone['img']; ?>"
-                                                style="max-height: 100%; max-width: 100%; object-fit: contain;"
-                                                alt="<?php echo htmlspecialchars($headphone['name']); ?>">
-                                        </div>
-                                        <div class="card-body text-center" style="padding: 10px;">
-                                            <div class="card-head"
-                                                style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 5px;">
-                                                <a href="../products.php?id=<?php echo $headphone['id']; ?>"
-                                                    style="text-decoration: none; color: #212121; font-weight: 500; font-size: 14px;">
-                                                    <?php echo htmlspecialchars($headphone['name']); ?>
-                                                </a>
+                            <?php if (!empty($furnitures)): ?>
+                                <?php foreach ($furnitures as $furniture): ?>
+                                    <div class="p-2" style="flex: 0 0 calc(100% / 5); max-width: calc(100% / 5);">
+                                        <div class="card product-card"
+                                            style="border: none; position: relative; height: 100%; transition: transform 0.2s; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+                                            <div
+                                                style="height: 180px; display: flex; align-items: center; justify-content: center; padding: 15px;">
+                                                <img src="<?php echo $furniture['img']; ?>"
+                                                    style="max-height: 100%; max-width: 100%; object-fit: contain;"
+                                                    alt="<?php echo htmlspecialchars($furniture['name']); ?>">
                                             </div>
-                                            <div class="card-text"
-                                                style="color: #388e3c; font-weight: 500; font-size: 14px; margin-bottom: 3px;">
-                                                <?php echo htmlspecialchars($headphone['price']); ?>
+                                            <div class="card-body text-center" style="padding: 10px;">
+                                                <div class="card-head"
+                                                    style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 5px;">
+                                                    <a href="../products.php?id=<?php echo $furniture['id']; ?>"
+                                                        style="text-decoration: none; color: #212121; font-weight: 500; font-size: 14px;">
+                                                        <?php echo htmlspecialchars($furniture['name']); ?>
+                                                    </a>
+                                                </div>
+                                                <div class="card-text"
+                                                    style="color: #388e3c; font-weight: 500; font-size: 14px; margin-bottom: 3px;">
+                                                    <?php echo htmlspecialchars($furniture['price']); ?>
+                                                </div>
+                                                <div class="text-muted"
+                                                    style="font-size: 12px; margin-bottom: 10px; color: #878787 !important;">
+                                                    <?php echo htmlspecialchars($furniture['desc']); ?>
+                                                </div>
+                                                <form method="POST" class="text-center mt-auto d-inline-block w-100">
+                                                    <input type="hidden" name="product_id" value="<?php echo $furniture['id']; ?>">
+                                                    <input type="hidden" name="product_name"
+                                                        value="<?php echo htmlspecialchars($furniture['name']); ?>">
+                                                    <input type="hidden" name="product_image"
+                                                        value="<?php echo $furniture['img']; ?>">
+                                                    <button type="submit" name="add_to_cart"
+                                                        class="btn btn-primary btn-sm w-100">
+                                                        <i class="fa-solid fa-cart-arrow-down mr-1"></i> Add To Cart
+                                                    </button>
+                                                </form>
                                             </div>
-                                            <div class="text-muted"
-                                                style="font-size: 12px; margin-bottom: 10px; color: #878787 !important;">
-                                                <?php echo htmlspecialchars($headphone['desc']); ?>
-                                            </div>
-                                            <form method="POST" class="text-center mt-auto d-inline-block w-100">
-                                                <input type="hidden" name="product_id" value="<?php echo $headphone['id']; ?>">
-                                                <input type="hidden" name="product_name"
-                                                    value="<?php echo htmlspecialchars($headphone['name']); ?>">
-                                                <input type="hidden" name="product_image"
-                                                    value="<?php echo $headphone['img']; ?>">
-                                                <button type="submit" name="add_to_cart"
-                                                    class="btn btn-primary btn-sm w-100">
-                                                    <i class="fa-solid fa-cart-arrow-down mr-1"></i> Add To Cart
-                                                </button>
-                                            </form>
                                         </div>
                                     </div>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <div class="col-12">
+                                    <p style="margin: 0; padding: 24px; text-align: center; color: #666;">
+                                        No furnitures products found right now.
+                                    </p>
                                 </div>
-                            <?php endforeach; ?>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -373,3 +300,4 @@ $headphoneProducts = [];
 </body>
 
 </html>
+
