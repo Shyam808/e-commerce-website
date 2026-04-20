@@ -66,7 +66,7 @@ if (!isset($_SESSION['email1'])) {
                 <a href="../index.php">View Store</a>
                 <a href="orders.php" style=" color: #2874f0;
                     text-decoration: none;
-                    background-color: rgb(229, 233, 255);
+                    background-color: rgb(242, 242, 242);
                     border: 2px solid #2874f0;
                     transform: translateX(8px);">Orders</a>
                 <a href="customers.php">Customers</a>
