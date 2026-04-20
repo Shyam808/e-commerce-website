@@ -71,6 +71,7 @@ if (isset($_POST['payment'])) {
         exit();
     } else {
         echo "<script>alert('Payment failed. Please try again.');</script>";
+        echo "Error " . mysqli_error($conn);
     }
 }
 ?>

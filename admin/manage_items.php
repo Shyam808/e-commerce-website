@@ -8,6 +8,7 @@ if (!isset($_SESSION['email1'])) {
 }
 
 $categories = [
+    "For you",
     "fashion",
     "mobiles",
     "books",
@@ -24,6 +25,12 @@ $categories = [
     "furniture"
 ];
 
+$for_you_sections = [
+    "for you - suggested for you" => "Suggested For You",
+    "for you - top smart tvs" => "Top Smart TVs",
+    "for you - watches" => "Watches"
+];
+
 $product = [
     "product_name" => "",
     "category" => "",
@@ -32,7 +39,8 @@ $product = [
     "image_url" => "",
     "stock" => "",
     "status" => "",
-    "source_product_id" => ""
+    "source_product_id" => "",
+    "for_you_section" => ""
 ];
 
 $has_source_product_id = false;
@@ -50,6 +58,11 @@ if ($edit_id > 0) {
 
     if ($result && mysqli_num_rows($result) > 0) {
         $product = mysqli_fetch_assoc($result);
+        $saved_category = strtolower(trim($product["category"]));
+        if (isset($for_you_sections[$saved_category])) {
+            $product["for_you_section"] = $saved_category;
+            $product["category"] = "For you";
+        }
         $is_edit_mode = true;
     }
 }
@@ -63,6 +76,11 @@ if (isset($_POST["add_product"])) {
     $stock = mysqli_real_escape_string($conn, $_POST["stock"]);
     $status = mysqli_real_escape_string($conn, $_POST["status"]);
     $source_product_id = isset($_POST["source_product_id"]) ? (int) $_POST["source_product_id"] : 0;
+    $for_you_section = isset($_POST["for_you_section"]) ? strtolower(trim($_POST["for_you_section"])) : "";
+
+    if (strtolower(trim($category)) === "for you") {
+        $category = isset($for_you_sections[$for_you_section]) ? $for_you_section : "for you - suggested for you";
+    }
 
     if ($has_source_product_id) {
         $source_product_value = $source_product_id > 0 ? $source_product_id : "NULL";
@@ -96,6 +114,11 @@ if (isset($_POST["update_product"])) {
     $stock = mysqli_real_escape_string($conn, $_POST["stock"]);
     $status = mysqli_real_escape_string($conn, $_POST["status"]);
     $source_product_id = isset($_POST["source_product_id"]) ? (int) $_POST["source_product_id"] : 0;
+    $for_you_section = isset($_POST["for_you_section"]) ? strtolower(trim($_POST["for_you_section"])) : "";
+
+    if (strtolower(trim($category)) === "for you") {
+        $category = isset($for_you_sections[$for_you_section]) ? $for_you_section : "for you - suggested for you";
+    }
 
     $query = "UPDATE products
               SET product_name = '$product_name',
@@ -210,7 +233,7 @@ if (isset($_POST["update_product"])) {
                         <input type="text" name="product_name" placeholder="Product Name"
                             value="<?php echo htmlspecialchars($product["product_name"]); ?>" required>
 
-                        <select name="category" required>
+                        <select name="category" id="category-select" required>
                             <option value="">Select Category</option>
                             <?php foreach ($categories as $category) { ?>
                                 <option value="<?php echo htmlspecialchars($category); ?>"
@@ -219,6 +242,18 @@ if (isset($_POST["update_product"])) {
                                 </option>
                             <?php } ?>
                         </select>
+
+                        <div id="for-you-section-wrap" style="<?php echo $product["category"] === "For you" ? "" : "display: none;"; ?>">
+                            <select name="for_you_section" id="for-you-section-select">
+                                <option value="">Select For You Section</option>
+                                <?php foreach ($for_you_sections as $section_value => $section_label) { ?>
+                                    <option value="<?php echo htmlspecialchars($section_value); ?>"
+                                        <?php echo $product["for_you_section"] === $section_value ? "selected" : ""; ?>>
+                                        <?php echo htmlspecialchars($section_label); ?>
+                                    </option>
+                                <?php } ?>
+                            </select>
+                        </div>
 
                         <input type="text" name="price" placeholder="Product Price"
                             value="<?php echo htmlspecialchars($product["price"]); ?>" required>
@@ -260,6 +295,28 @@ if (isset($_POST["update_product"])) {
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const categorySelect = document.getElementById('category-select');
+        const forYouSectionWrap = document.getElementById('for-you-section-wrap');
+        const forYouSectionSelect = document.getElementById('for-you-section-select');
+
+        function toggleForYouSection() {
+            const isForYou = categorySelect && categorySelect.value === 'For you';
+
+            if (forYouSectionWrap) {
+                forYouSectionWrap.style.display = isForYou ? '' : 'none';
+            }
+
+            if (!isForYou && forYouSectionSelect) {
+                forYouSectionSelect.value = '';
+            }
+        }
+
+        if (categorySelect) {
+            categorySelect.addEventListener('change', toggleForYouSection);
+            toggleForYouSection();
+        }
+    </script>
 </body>
 
 </html>

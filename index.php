@@ -45,6 +45,67 @@ if (isset($_POST['add_to_cart'])) {
     }
 }
 
+function getForYouProducts($conn, $categories, $existing_ids = [])
+{
+    $normalized_categories = [];
+    foreach ($categories as $category) {
+        $normalized_categories[] = "'" . mysqli_real_escape_string($conn, strtolower(trim($category))) . "'";
+    }
+
+    if (empty($normalized_categories)) {
+        return [];
+    }
+
+    $products = [];
+    $query = "SELECT * FROM products WHERE LOWER(TRIM(category)) IN (" . implode(", ", $normalized_categories) . ")";
+    $result = mysqli_query($conn, $query);
+
+    if ($result) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $detail_id = !empty($row['source_product_id']) ? (int) $row['source_product_id'] : (int) $row['id'];
+
+            if (isset($existing_ids[$detail_id])) {
+                continue;
+            }
+
+            $products[] = [
+                'id' => $detail_id,
+                'name' => $row['product_name'],
+                'price' => 'From ₹' . number_format((float) $row['price'], 0),
+                'desc' => $row['description'],
+                'img' => $row['image_url']
+            ];
+            $existing_ids[$detail_id] = true;
+        }
+    }
+
+    return $products;
+}
+
+$suggested_for_you_products = getForYouProducts($conn, ['for you', 'for you - suggested for you'], [
+    1 => true,
+    2 => true,
+    3 => true,
+    4 => true,
+    5 => true,
+    666 => true
+]);
+
+$top_smart_tv_products = getForYouProducts($conn, ['for you - top smart tvs'], [
+    6 => true,
+    7 => true,
+    8 => true,
+    9 => true
+]);
+
+$watch_products = getForYouProducts($conn, ['for you - watches'], [
+    10 => true,
+    11 => true,
+    12 => true,
+    13 => true,
+    14 => true
+]);
+
 $is_frontend_admin = false;
 if (isset($_SESSION['email'])) {
     $email_check = mysqli_real_escape_string($conn, $_SESSION['email']);
@@ -449,10 +510,55 @@ if (isset($_SESSION['email'])) {
                                                 <i class="fa-solid fa-cart-arrow-down mr-1"></i> Add to cart
                                             </button>
                                         </form>
-
                                     </div>
                                 </div>
                             </div>
+                            <!-- <div class="col-5-card p-2">
+                                <div class="card product-card">
+                                    <img src="https://rukminim2.flixcart.com/image/312/312/xif0q/mobile/s/n/p/-original-imahfrff5gqmz6ed.jpeg?q=70"
+                                        class="card-img-top" alt="iPhone 15">
+                                    <div class="card-body">
+                                        <div class="card-head"><a href="products.php?id=666"
+                                                style="text-decoration: none; color: #000;">Samsung Galaxy S25 FE 5G</a>
+                                        </div>
+                                        <div class="card-text">From ₹54999</div>
+                                        <div class="text-primary text-muted" style="font-size: 13px;">Exynos 2400e
+                                            Processor</div>
+                                        <form method="POST" class="text-center mt-2 d-inline-block">
+                                            <input type="hidden" name="product_id" value="666">
+                                            <input type="hidden" name="product_name" value="Samsung Galaxy S25 FE 5G">
+                                            <input type="hidden" name="product_image"
+                                                value="https://rukminim2.flixcart.com/image/312/312/xif0q/mobile/s/n/p/-original-imahfrff5gqmz6ed.jpeg?q=70">
+                                            <button type="submit" name="add_to_cart" class="btn btn-primary btn-sm">
+                                                <i class="fa-solid fa-cart-arrow-down mr-1"></i> Add to cart
+                                            </button>
+                                        </form>
+
+                                    </div>
+                                </div>
+                            </div> -->
+                            <?php foreach ($suggested_for_you_products as $suggested_product): ?>
+                                <div class="col-5-card p-2">
+                                    <div class="card product-card">
+                                        <img src="<?php echo htmlspecialchars($suggested_product['img']); ?>"
+                                            class="card-img-top" alt="<?php echo htmlspecialchars($suggested_product['name']); ?>">
+                                        <div class="card-body">
+                                            <div class="card-head"><a href="products.php?id=<?php echo (int) $suggested_product['id']; ?>"
+                                                    style="text-decoration: none; color: #000;"><?php echo htmlspecialchars($suggested_product['name']); ?></a></div>
+                                            <div class="card-text"><?php echo htmlspecialchars($suggested_product['price']); ?></div>
+                                            <div class="text-primary text-muted" style="font-size: 13px;"><?php echo htmlspecialchars($suggested_product['desc']); ?></div>
+                                            <form method="POST" class="text-center mt-2 d-inline-block">
+                                                <input type="hidden" name="product_id" value="<?php echo (int) $suggested_product['id']; ?>">
+                                                <input type="hidden" name="product_name" value="<?php echo htmlspecialchars($suggested_product['name']); ?>">
+                                                <input type="hidden" name="product_image" value="<?php echo htmlspecialchars($suggested_product['img']); ?>">
+                                                <button type="submit" name="add_to_cart" class="btn btn-primary btn-sm w-100">
+                                                    <i class="fa-solid fa-cart-arrow-down mr-1"></i> Add To Cart
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
 
                         </div>
                     </div>
@@ -561,6 +667,50 @@ if (isset($_SESSION['email'])) {
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- <div class="col-4-card p-2">
+                                <div class="card product-card">
+                                    <img src="https://rukminim2.flixcart.com/image/312/312/xif0q/television/j/3/5/-original-imahjf6ypgx2f9sy.jpeg?q=70"
+                                        class="card-img-top" alt="LG OLED">
+                                    <div class="card-body">
+                                        <div class="card-head"><a href="products.php?id=9"
+                                                style="text-decoration: none; color: #000; cursor: pointer;">Xiaomi 43 inch Smart TV</a></div>
+                                        <div class="card-text">From ₹24,999</div>
+                                        <div class="text-primary text-muted" style="font-size: 13px;">Ultra HD (4K) Smart WebOS TV</div>
+                                        <form method="POST" class="text-center mt-2 d-inline-block">
+                                            <input type="hidden" name="product_id" value="9">
+                                            <input type="hidden" name="product_name" value="Xiaomi 43 inch Smart TV">
+                                            <input type="hidden" name="product_image"
+                                                value="https://rukminim2.flixcart.com/image/312/312/xif0q/television/j/3/5/-original-imahjf6ypgx2f9sy.jpeg?q=70">
+                                            <button type="submit" name="add_to_cart" class="btn btn-primary btn-sm">
+                                                <i class="fa-solid fa-cart-arrow-down mr-1"></i> Add to cart
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <?php foreach ($top_smart_tv_products as $tv_product): ?>
+                                <div class="col-4-card p-2">
+                                    <div class="card product-card">
+                                        <img src="<?php echo htmlspecialchars($tv_product['img']); ?>"
+                                            class="card-img-top" alt="<?php echo htmlspecialchars($tv_product['name']); ?>">
+                                        <div class="card-body">
+                                            <div class="card-head"><a href="products.php?id=<?php echo (int) $tv_product['id']; ?>"
+                                                    style="text-decoration: none; color: #000; cursor: pointer;"><?php echo htmlspecialchars($tv_product['name']); ?></a></div>
+                                            <div class="card-text"><?php echo htmlspecialchars($tv_product['price']); ?></div>
+                                            <div class="text-primary text-muted" style="font-size: 13px;"><?php echo htmlspecialchars($tv_product['desc']); ?></div>
+                                            <form method="POST" class="text-center mt-2 d-inline-block">
+                                                <input type="hidden" name="product_id" value="<?php echo (int) $tv_product['id']; ?>">
+                                                <input type="hidden" name="product_name" value="<?php echo htmlspecialchars($tv_product['name']); ?>">
+                                                <input type="hidden" name="product_image" value="<?php echo htmlspecialchars($tv_product['img']); ?>">
+                                                <button type="submit" name="add_to_cart" class="btn btn-primary btn-sm">
+                                                    <i class="fa-solid fa-cart-arrow-down mr-1"></i> Add to cart
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
 
                         </div>
                     </div>
@@ -684,6 +834,29 @@ if (isset($_SESSION['email'])) {
                                     </div>
                                 </div>
                             </div>
+                            <?php foreach ($watch_products as $watch_product): ?>
+                                <div class="col-5-card p-2">
+                                    <div class="card product-card">
+                                        <img src="<?php echo htmlspecialchars($watch_product['img']); ?>"
+                                            class="card-img-top" alt="<?php echo htmlspecialchars($watch_product['name']); ?>"
+                                            style="height: 200px; object-fit: contain; padding: 10px;">
+                                        <div class="card-body">
+                                            <div class="card-head"><a href="products.php?id=<?php echo (int) $watch_product['id']; ?>"
+                                                    style="text-decoration: none; color: #000;"><?php echo htmlspecialchars($watch_product['name']); ?></a></div>
+                                            <div class="card-text"><?php echo htmlspecialchars($watch_product['price']); ?></div>
+                                            <div class="text-primary text-muted" style="font-size: 13px;"><?php echo htmlspecialchars($watch_product['desc']); ?></div>
+                                            <form method="POST" class="text-center mt-2 d-inline-block">
+                                                <input type="hidden" name="product_id" value="<?php echo (int) $watch_product['id']; ?>">
+                                                <input type="hidden" name="product_name" value="<?php echo htmlspecialchars($watch_product['name']); ?>">
+                                                <input type="hidden" name="product_image" value="<?php echo htmlspecialchars($watch_product['img']); ?>">
+                                                <button type="submit" name="add_to_cart" class="btn btn-primary btn-sm">
+                                                    <i class="fa-solid fa-cart-arrow-down mr-1"></i> Add to cart
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
                         </div>
                     </div>
                 </div>
