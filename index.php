@@ -132,32 +132,7 @@ if (isset($_SESSION['email'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/css/adminlte.min.css">
     <link rel="stylesheet" href="custom_style.css">
     <link rel="stylesheet" href="flipkart_style.css">
-    <!-- <style>
-        .col-5-card {
-            flex: 0 0 20%;
-            max-width: 20%;
-        }
-
-        .col-4-card {
-            flex: 0 0 25%;
-            max-width: 25%;
-        }
-
-        .row-horizontal {
-            flex-wrap: nowrap;
-            overflow-x: auto;
-            padding-bottom: 10px;
-        }
-
-        .row-horizontal::-webkit-scrollbar {
-            height: 8px;
-        }
-
-        .row-horizontal::-webkit-scrollbar-thumb {
-            background: #c1c1c1;
-            border-radius: 4px;
-        }
-    </style> -->
+    
 </head>
 
 <body class="hold-transition layout-top-nav">

@@ -42,9 +42,10 @@ if (!isset($_SESSION['email1'])) {
                         class="far fa-user-circle mr-2"
                         style="font-size: 20px;"></i><?php echo htmlspecialchars($_SESSION['email1']); ?></a>
                 <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-                    <li><a href="orders.php" class="dropdown-item text-dark">Orders</a></li>
-                    <li><a href="payment.php" class="dropdown-item text-dark">Payments</a></li>
-                    <li><a href="cart.php" class="dropdown-item text-dark">Cart</a></li>
+                    <li><a href="admin_dashboard.php" class="dropdown-item text-dark">Dashboard</a></li>
+                    <li><a href="manage_items.php" class="dropdown-item text-dark">Manage products</a></li>
+                    <li><a href="view_product.php" class="dropdown-item text-dark">View products</a></li>
+                    <li><a href="orders.php" class="dropdown-item text-dark" style="color:#2874f0 !important; font-weight:bold;">Orders</a></li>
                     <li><a href="customers.php" class="dropdown-item text-dark">Customers</a></li>
                     <li><a href="logout.php" class="dropdown-item text-danger">Logout</a></li>
                 </ul>
